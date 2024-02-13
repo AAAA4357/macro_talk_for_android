@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="default_text_light">
+        <item name="android:fontFamily">@font/font_main</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/lightgray</item>
+    </style>
+    <style name="default_text">
+        <item name="android:fontFamily">@font/font_main</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/gray</item>
+    </style>
+    <style name="default_text_dark">
+        <item name="android:fontFamily">@font/font_main</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/darkgray</item>
+    </style>
+</resources>

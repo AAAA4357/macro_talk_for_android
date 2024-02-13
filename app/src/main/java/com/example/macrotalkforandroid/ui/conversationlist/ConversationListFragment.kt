@@ -1,0 +1,33 @@
+package com.example.macrotalkforandroid.ui.conversationlist
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.example.macrotalkforandroid.databinding.FragmentConversationListBinding
+
+class ConversationListFragment : Fragment() {
+
+    private var _binding: FragmentConversationListBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentConversationListBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+
+        return root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}

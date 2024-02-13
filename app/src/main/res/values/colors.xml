@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFFFF</color>
+    <color name="lightgray">#FFC8C8C8</color>
+    <color name="trans_lightgray">#80C8C8C8</color>
+    <color name="gray">#FF808080</color>
+    <color name="darkgray">#FF484848</color>
+    <color name="black">#FF000000</color>
+    <color name="lightcyan">#FF80FFFF</color>
+    <color name="momotalk_pink1">#FFEF8C95</color>
+    <color name="momotalk_pink2">#FFE79BAA</color>
+    <color name="momotalk_lightcyan">#FFD7EDFA</color>
+    <color name="momotalk_darkcyan">#4F85AF</color>
+</resources>
