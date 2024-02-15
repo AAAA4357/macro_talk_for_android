@@ -75,5 +75,29 @@ data class Birthday(
 
 data class Conversation(
     val Title : String,
-
+    val Profiles : List<ProfileSelector>,
+    val Avator : Image?,
+    val Dialogues : List<Dialogue>
 )
+
+data class ProfileSelector(
+    val isPrefab : Boolean,
+    val PrefabIndex : Int
+)
+
+data class Dialogue(
+    val Type : DialogueType,
+    val Name : String?,
+    val Avator : Image?,
+    val Content : Array<String>?,
+    val ImageContent : Image?
+)
+
+enum class DialogueType {
+    Student1,
+    Student2,
+    Teacher,
+    Narrator,
+    Knot,
+    Reply
+}

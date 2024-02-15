@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import java.io.IOException
 
 internal class ProfileListAdapter(private val context: Context, profileList: Array<Profile>) :
     RecyclerView.Adapter<ProfileListAdapter.ProfileViewHodler>() {
@@ -58,7 +57,7 @@ internal class ProfileListAdapter(private val context: Context, profileList: Arr
         val view : View
 
         init {
-            profileListImage = itemView.findViewById<View>(R.id.profilelist_Image) as ImageView
+            profileListImage = itemView.findViewById<View>(R.id.conversationlist_Image) as ImageView
             profileListName = itemView.findViewById<View>(R.id.profilelist_Name) as TextView
             profileListMomotalkState = itemView.findViewById<View>(R.id.profilelist_MomotalkState) as TextView
             profileListSchoolImage = itemView.findViewById<View>(R.id.profilelist_SchoolImage) as ImageView

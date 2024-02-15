@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="64dp"
+    android:height="128dp"
+    android:viewportWidth="64"
+    android:viewportHeight="128">
+    <path android:pathData="m 0 64 L 64 0 L 64 128" android:fillColor="@color/momotalk_dialogue_student"/>
+</vector>

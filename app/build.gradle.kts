@@ -57,4 +57,5 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation("com.github.kongzue.DialogX:DialogX:0.0.50.beta8")
+    implementation("org.xutils:xutils:3.8.5")
 }

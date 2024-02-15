@@ -9,14 +9,13 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.TextPaint
 import android.util.TypedValue
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toolbar.LayoutParams
 import androidx.annotation.ColorRes
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.houbb.pinyin.constant.enums.PinyinStyleEnum
@@ -24,6 +23,7 @@ import com.github.houbb.pinyin.util.PinyinHelper
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kongzue.dialogx.dialogs.CustomDialog
 import com.kongzue.dialogx.interfaces.OnBindView
+
 
 class ProfileTab() : Fragment() {
     lateinit var profileList : List<Profile>
@@ -120,8 +120,8 @@ class ProfileTab() : Fragment() {
 
     inner class SuspendItemDecoration(val context: Context) : RecyclerView.ItemDecoration() {
 
-        var dividerDrawable: Drawable? = null       //普通Item间的分割线
-        var groupDividerDrawable: Drawable? = null  //每组之间的分割线
+        var dividerDrawable: Drawable? = null
+        var groupDividerDrawable: Drawable? = null
         var profiles: List<Profile>? = null
 
         private val bounds = Rect()
@@ -145,7 +145,6 @@ class ProfileTab() : Fragment() {
             }
 
         init {
-            //系统默认的分割线
             val tapeArray = context.obtainStyledAttributes(intArrayOf(android.R.attr.listDivider))
             dividerDrawable = tapeArray.getDrawable(0)
             tapeArray.recycle()
@@ -187,12 +186,10 @@ class ProfileTab() : Fragment() {
                     groupDividerDrawable
                 }
 
-                //绘制分割线
                 val top = bounds.top
                 val bottom = top + (drawable?.intrinsicHeight ?: 0)
                 drawable?.setBounds(left, top, right, bottom)
                 drawable?.draw(c)
-                //绘制文本内容
                 if (isDrawText) {
                     if (drawable != null) {
                         textPaint.getTextBounds(currentInitial, 0, currentInitial.length, bounds)
@@ -211,7 +208,6 @@ class ProfileTab() : Fragment() {
             val list = profiles ?: return
             val drawable = groupDividerDrawable ?: return
 
-            //只判断layoutManager为LinearLayoutManager的情况，其他情况的不做处理
             val layoutManager = parent.layoutManager as? LinearLayoutManager ?: return
 
             val position = layoutManager.findFirstVisibleItemPosition()
@@ -232,7 +228,6 @@ class ProfileTab() : Fragment() {
 
             c.save()
             if (currentInitial != nextInitial) {
-                //顶部移出效果
                 if (child.top + child.height < drawable.intrinsicHeight) {
                     c.translate(0f, (child.height + child.top - drawable.intrinsicHeight).toFloat())
                 }
@@ -268,7 +263,6 @@ class ProfileTab() : Fragment() {
                 null
             }
 
-            //当前首字母与上一个首字母相同 则属于同一组，使用 dividerDrawable
             val drawable = if (currentInitial == lastInitial) {
                 dividerDrawable
             } else {
@@ -276,7 +270,6 @@ class ProfileTab() : Fragment() {
             }
 
             val height = drawable?.intrinsicHeight ?: 0
-            //设置Item的上下左右偏移
             outRect.set(0, height, 0, 0)
         }
 
