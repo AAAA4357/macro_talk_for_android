@@ -1,9 +1,10 @@
-package com.example.macrotalkforandroid
+package com.Macro.macrotalkforandroid
 
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.Macro.macrotalkforandroid.R
 
 class DialogueListAdapter(private val context: Context, dialogues : List<Dialogue>) :
     RecyclerView.Adapter<DialogueListAdapter.DialogueViewHodler>() {

@@ -30,7 +30,7 @@
             android:orientation="vertical">
 
         <TextView
-            android:id="@+id/conversationlist_Name"
+            android:id="@+id/conversationlist_Title"
             android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -43,7 +43,7 @@
             app:layout_constraintEnd_toStartOf="@id/profilelist_SchoolImage"/>
         
         <TextView
-                android:id="@+id/conversationlist_MomotalkState"
+                android:id="@+id/conversationlist_LastDialogue"
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"

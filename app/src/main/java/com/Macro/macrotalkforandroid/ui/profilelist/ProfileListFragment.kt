@@ -1,4 +1,4 @@
-package com.example.macrotalkforandroid.ui.profilelist
+package com.Macro.macrotalkforandroid.ui.profilelist
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.example.macrotalkforandroid.ProfileTab
-import com.example.macrotalkforandroid.R
-import com.example.macrotalkforandroid.databinding.FragmentProfileListBinding
+import com.Macro.macrotalkforandroid.ProfileTab
+import com.Macro.macrotalkforandroid.R
+import com.Macro.macrotalkforandroid.databinding.FragmentProfileListBinding
 import com.google.android.material.tabs.TabLayout
 
 
@@ -71,11 +71,8 @@ class ProfileListFragment : Fragment() {
             return super.instantiateItem(container, position)
         }
 
-        //返回tablayout的标题文字;
         override fun getPageTitle(position: Int): CharSequence {
             return tabTitles[position]
         }
     }
-
-
 }

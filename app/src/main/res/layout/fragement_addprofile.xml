@@ -1,40 +1,254 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
-    android:layout_height="500dp"
-    android:background="@color/white">
+    android:layout_height="620dp"
+    android:background="@color/white"
+    android:orientation="vertical">
 
 
     <EditText
         android:id="@+id/add_profile_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="240dp"
+        android:layout_height="48dp"
         android:layout_marginTop="20dp"
+        android:layout_gravity="center"
         android:ems="10"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:hint="@string/add_profile_name"
+        android:inputType="text"
         android:lines="1"
-        android:selectAllOnFocus="true" />
+        android:selectAllOnFocus="true"
+        android:textAppearance="@style/default_text_dark"
+        android:textSize="16sp"
+        android:maxLength="20"
+        android:theme="@style/input_underline"/>
 
     <EditText
         android:id="@+id/add_profile_firstname"
+        android:layout_width="240dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:hint="@string/add_profile_firstname"
+        android:inputType="text"
+        android:lines="1"
+        android:selectAllOnFocus="true"
+        android:textAppearance="@style/default_text_dark"
+        android:textSize="16sp"
+        android:maxLength="20"
+        android:theme="@style/input_underline" />
+
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/add_profile_avators"
+        android:textAppearance="@style/default_text_dark"
+        android:textSize="16sp"/>
+
+    <ScrollView
+        android:layout_width="240dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center">
+
+        <GridLayout
+            android:id="@+id/add_profile_avators"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="4">
+
+
+            <ImageButton
+                android:id="@+id/add_profile_avators_add"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:backgroundTint="#FFFFFF"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_addimage"
+                app:tint="@color/lightgray" />
+
+        </GridLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center">
+
+        <EditText
+            android:id="@+id/add_profile_age"
+            android:layout_width="120dp"
+            android:layout_height="48dp"
+            android:selectAllOnFocus="true"
+            android:textAppearance="@style/default_text_dark"
+            android:textSize="16sp"
+            android:ems="10"
+            android:maxLength="5"
+            android:hint="@string/add_profile_age"
+            android:inputType="number"
+            android:theme="@style/input_underline" />
+
+        <EditText
+            android:id="@+id/add_profile_height"
+            android:layout_width="120dp"
+            android:layout_height="48dp"
+            android:selectAllOnFocus="true"
+            android:textAppearance="@style/default_text_dark"
+            android:textSize="16sp"
+            android:ems="10"
+            android:maxLength="5"
+            android:hint="@string/add_profile_height"
+            android:inputType="number"
+            android:theme="@style/input_underline" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/add_profile_birthday"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/add_profile_birthday_unselected"
+            android:textAppearance="@style/default_text_dark"/>
+
+        <TextView
+            android:id="@+id/add_profile_birthday_select"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:clickable="true"
+            android:text="@string/add_profile_birthday_select"
+            android:textAppearance="@style/default_text"
+            android:textColor="@color/momotalk_darkcyan"
+            android:textSize="16sp"
+            android:background="?android:attr/selectableItemBackground"/>
+
+        <TextView
+            android:id="@+id/add_profile_birthday_clear"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:clickable="true"
+            android:text="@string/add_profile_birthday_clear"
+            android:textAppearance="@style/default_text"
+            android:textColor="@color/momotalk_darkcyan"
+            android:textSize="16sp"
+            android:background="?android:attr/selectableItemBackground"/>
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/add_profile_school"
+        android:layout_width="240dp"
+        android:layout_height="48dp"
+        android:selectAllOnFocus="true"
+        android:textAppearance="@style/default_text_dark"
+        android:textSize="16sp"
+        android:ems="10"
+        android:hint="@string/add_profile_school"
+        android:inputType="text"
+        android:maxLength="20"
+        android:layout_gravity="center"
+        android:theme="@style/input_underline" />
+
+    <EditText
+        android:id="@+id/add_profile_hobbies"
+        android:layout_width="240dp"
+        android:layout_height="48dp"
+        android:selectAllOnFocus="true"
+        android:textAppearance="@style/default_text_dark"
+        android:textSize="16sp"
         android:ems="10"
         android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_profile_name"
-        android:hint="@string/add_profile_firstname"
-        android:lines="1"
-        android:selectAllOnFocus="true" />
+        android:maxLength="20"
+        android:layout_gravity="center"
+        android:theme="@style/input_underline" />
 
+    <EditText
+        android:id="@+id/add_profile_momotalkstate"
+        android:layout_width="240dp"
+        android:layout_height="48dp"
+        android:selectAllOnFocus="true"
+        android:textAppearance="@style/default_text_dark"
+        android:textSize="16sp"
+        android:ems="10"
+        android:hint="@string/add_profile_momotalkstate"
+        android:inputType="text"
+        android:maxLength="20"
+        android:layout_gravity="center"
+        android:theme="@style/input_underline" />
 
+    <EditText
+        android:id="@+id/add_profile_description"
+        android:layout_width="240dp"
+        android:layout_height="64dp"
+        android:textAppearance="@style/default_text_dark"
+        android:textSize="16sp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="@string/add_profile_description"
+        android:inputType="textMultiLine"
+        android:layout_gravity="center"
+        android:theme="@style/input_underline" />
 
+    <EditText
+        android:id="@+id/add_profile_tags"
+        android:layout_width="240dp"
+        android:layout_height="48dp"
+        android:selectAllOnFocus="true"
+        android:textAppearance="@style/default_text_dark"
+        android:textSize="16sp"
+        android:ems="10"
+        android:inputType="text"
+        android:maxLength="20"
+        android:layout_gravity="center"
+        android:theme="@style/input_underline" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/add_profile_cancel"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="30dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:clickable="true"
+            android:text="@string/add_profile_cancel"
+            android:textAppearance="@style/default_text"
+            android:textColor="@color/momotalk_darkcyan"
+            android:textSize="20sp"
+            android:background="?android:attr/selectableItemBackground" />
+
+        <TextView
+            android:id="@+id/add_profile_confirm"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="120dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:clickable="true"
+            android:text="@string/add_profile_confirm"
+            android:textAppearance="@style/default_text"
+            android:textColor="@color/momotalk_darkcyan"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_profile_description"
+            android:background="?android:attr/selectableItemBackground" />
+
+    </LinearLayout>
+
+</LinearLayout>

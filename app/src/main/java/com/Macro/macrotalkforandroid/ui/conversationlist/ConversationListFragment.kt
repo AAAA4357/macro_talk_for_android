@@ -1,11 +1,11 @@
-package com.example.macrotalkforandroid.ui.conversationlist
+package com.Macro.macrotalkforandroid.ui.conversationlist
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.macrotalkforandroid.databinding.FragmentConversationListBinding
+import com.Macro.macrotalkforandroid.databinding.FragmentConversationListBinding
 
 class ConversationListFragment : Fragment() {
 

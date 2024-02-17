@@ -1,4 +1,4 @@
-package com.example.macrotalkforandroid
+package com.Macro.macrotalkforandroid
 
 import android.app.Application
 import android.content.Context

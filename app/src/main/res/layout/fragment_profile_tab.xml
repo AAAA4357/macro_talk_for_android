@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="98dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ProfileTab">
     
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/profile_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="98dp"/>
+        android:layout_height="match_parent"/>
 
     <TextView
         android:id="@+id/profile_empty"
@@ -18,10 +18,11 @@
         android:layout_height="wrap_content"
         android:text="@string/custom_profile_empty"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@id/profile_list"
-        app:layout_constraintEnd_toEndOf="@id/profile_list"
-        app:layout_constraintStart_toStartOf="@id/profile_list"
-        app:layout_constraintTop_toTopOf="@id/profile_list" />
+        android:textAppearance="@style/default_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/profile_addprofile"
@@ -32,7 +33,7 @@
         android:clickable="true"
         android:src="@drawable/ic_add"
         app:backgroundTint="@color/momotalk_darkcyan"
-        app:layout_constraintBottom_toBottomOf="@id/profile_list"
-        app:layout_constraintEnd_toEndOf="@id/profile_list" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

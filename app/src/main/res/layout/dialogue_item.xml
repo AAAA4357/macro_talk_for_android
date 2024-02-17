@@ -41,7 +41,6 @@
                 android:layout_marginStart="5dp"
                 android:lines="1"
                 android:maxWidth="280dp"
-                android:text="Example_StudentName"
                 android:textAppearance="@style/default_text_dark"
                 android:textSize="15sp" />
 
@@ -81,7 +80,6 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
                         android:maxWidth="260dp"
-                        android:text="Example_Dialogue\nLine 2"
                         android:textAppearance="@style/default_text_dialogue"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -132,7 +130,6 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
                 android:maxWidth="260dp"
-                android:text="Example_Dialogue\nLine 2"
                 android:textAppearance="@style/default_text_dialogue"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -152,7 +149,7 @@
         android:layout_marginBottom="5dp"
         android:maxWidth="300dp"
         android:orientation="horizontal"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:visibility="gone">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -178,7 +175,6 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
                 android:maxWidth="260dp"
-                android:text="Example_Dialogue\nLine 2"
                 android:textAppearance="@style/default_text_dialogue"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -210,7 +206,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxWidth="260dp"
-            android:text="Example_Dialogue\nLine 2"
             android:textAppearance="@style/default_text_dialogue"
             android:textColor="@color/momotalk_dialogue_student"
             android:textAlignment="center"
@@ -261,7 +256,7 @@
             android:layout_marginTop="11dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="#FFFF94A4" />
+            android:background="#FFFF94A4" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -290,7 +285,7 @@
                 android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/ic_knot_heart" />
+                app:srcCompat="@drawable/ic_knot_heart" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -304,7 +299,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="#20000000"/>
+            android:background="#20000000"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
@@ -336,7 +331,6 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
-                android:text="Example_Knot"
                 android:textAlignment="center"
                 android:textAppearance="@style/default_text_dialogue"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -387,7 +381,7 @@
             android:layout_marginTop="11dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="#FFA8C5D7" />
+            android:background="#FFA8C5D7" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -410,7 +404,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="#20000000"/>
+            android:background="#20000000"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/Dialogue_Reply_Contents"
@@ -451,7 +445,6 @@
             android:layout_marginBottom="5dp"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
-            android:text="Example_Reply_Item"
             android:textAlignment="center"
             android:textAppearance="@style/default_text_dark"
             android:textSize="15sp"
@@ -497,7 +490,6 @@
                 android:layout_marginStart="5dp"
                 android:lines="1"
                 android:maxWidth="280dp"
-                android:text="Example_StudentName"
                 android:textAppearance="@style/default_text_dark"
                 android:textSize="15sp" />
 
@@ -540,8 +532,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_nobody"/>
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -590,8 +581,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_nobody"/>
+                app:layout_constraintTop_toTopOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -606,7 +596,7 @@
         android:layout_marginBottom="5dp"
         android:maxWidth="300dp"
         android:orientation="horizontal"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:visibility="gone">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -635,8 +625,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_nobody"/>
+                app:layout_constraintTop_toTopOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

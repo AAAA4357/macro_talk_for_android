@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.macrotalkforandroid"
+    namespace = "com.Macro.macrotalkforandroid"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.macrotalkforandroid"
+        applicationId = "com.Macro.macrotalkforandroid"
         minSdk = 30
         targetSdk = 34
         versionCode = 1
@@ -58,4 +58,5 @@ dependencies {
 
     implementation("com.github.kongzue.DialogX:DialogX:0.0.50.beta8")
     implementation("org.xutils:xutils:3.8.5")
+    implementation("com.github.getActivity:XXPermissions:18.6")
 }

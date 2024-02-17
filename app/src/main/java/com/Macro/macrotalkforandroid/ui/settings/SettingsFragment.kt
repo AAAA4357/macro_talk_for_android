@@ -1,11 +1,11 @@
-package com.example.macrotalkforandroid.ui.settings
+package com.Macro.macrotalkforandroid.ui.settings
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.macrotalkforandroid.databinding.FragmentSettingsBinding
+import com.Macro.macrotalkforandroid.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment() {
 

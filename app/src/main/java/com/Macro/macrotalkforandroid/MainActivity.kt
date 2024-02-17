@@ -1,15 +1,14 @@
-package com.example.macrotalkforandroid
+package com.Macro.macrotalkforandroid
 
 import android.os.Bundle
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.macrotalkforandroid.databinding.ActivityMainBinding
+import com.Macro.macrotalkforandroid.databinding.ActivityMainBinding
+import com.Macro.macrotalkforandroid.R
 
 class MainActivity : AppCompatActivity() {
 
