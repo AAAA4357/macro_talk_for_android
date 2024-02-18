@@ -33,4 +33,5 @@
     <string name="conversation_empty">暂无对话\n可点击右下角按钮创建</string>
     <string name="knot">羁绊剧情</string>
     <string name="reply">回复</string>
+    <string name="start_conversation">开始对话</string>
 </resources>
