@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
-class ConversationListAdapter(private val context: Context, val conversationList: List<Conversation>) :
+class ConversationListAdapter(private val context: Context, val conversationList: MutableList<Conversation>) :
     RecyclerView.Adapter<ConversationListAdapter.ConversationViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConversationViewHolder {
         val itemView = LayoutInflater.from(context).inflate(R.layout.conversation_item, parent, false)
@@ -34,6 +34,21 @@ class ConversationListAdapter(private val context: Context, val conversationList
 
         val animation = AnimationUtils.loadAnimation(holder.view.context, R.anim.list_item_anim)
         holder.view.startAnimation(animation)
+    }
+
+    fun addItem(conversation: Conversation) {
+        conversationList.add(conversation)
+        notifyItemInserted(conversationList.size)
+    }
+
+    fun removeItem(index : Int) {
+        conversationList.removeAt(index)
+        notifyItemRemoved(index)
+    }
+
+    fun replaceItem(index : Int, newConversation : Conversation) {
+        conversationList[index] = newConversation
+        notifyItemChanged(index)
     }
 
     inner class ConversationViewHolder(itemView: View) : ViewHolder(itemView) {
@@ -83,9 +98,5 @@ class ConversationListAdapter(private val context: Context, val conversationList
 
     fun setOnItemLongClickListener(onItemLongClickListener: OnItemLongClickListener?) {
         this.onItemLongClickListener = onItemLongClickListener
-    }
-
-    fun addItem(conversation: Conversation) {
-
     }
 }

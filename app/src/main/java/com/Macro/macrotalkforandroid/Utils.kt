@@ -29,7 +29,7 @@ class Utils {
 
         var SettingData : SettingData
             init {
-                SettingData = SettingData(",")
+                SettingData = SettingData(",", "0xFFFFF9D9")
             }
 
         fun dip2px(context: Context, dpValue: Float): Int {
@@ -47,7 +47,8 @@ class Utils {
 }
 
 data class SettingData(
-    val DefaultSplitChar : String
+    val DefaultSplitChar : String,
+    val ConversationBgColor : String
 )
 
 data class PrefabData(
@@ -80,7 +81,8 @@ data class Profile(
 
 data class Image(
     val ImageName : String,
-    val ImageOriginalUri : String
+    val ImageOriginalUri : String,
+    val isNotPrefab : Boolean
 )
 
 data class Birthday(
@@ -92,7 +94,7 @@ data class Conversation(
     val Title : String,
     val Profiles : List<ProfileSelector>,
     val Image : Image,
-    val Dialogues : List<Dialogue>
+    val Tags : List<String>?
 ) {
     val LastDialogue : String
         get() {
@@ -125,6 +127,7 @@ data class Conversation(
                 }
             }
         }
+    val Dialogues : MutableList<Dialogue> = listOf<Dialogue>().toMutableList()
 }
 
 data class ProfileSelector(

@@ -10,7 +10,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.Macro.macrotalkforandroid.R
 
 class ProfileListAdapter(private val context: Context, var profileList: List<Profile>, val isPrefab : Boolean) :
     RecyclerView.Adapter<ProfileListAdapter.ProfileViewHodler>() {
@@ -22,7 +21,7 @@ class ProfileListAdapter(private val context: Context, var profileList: List<Pro
 
     override fun onBindViewHolder(holder: ProfileViewHodler, position: Int) {
         val data: Profile = profileList[position]
-        if (isPrefab) {
+        if (!data.Images[0].isNotPrefab) {
             val input = context.assets.open(data.Images[0].ImageName + ".jpg")
             holder.profileListImage.setImageBitmap(BitmapFactory.decodeStream(input))
         } else {
@@ -31,15 +30,17 @@ class ProfileListAdapter(private val context: Context, var profileList: List<Pro
         }
         holder.profileListName.text = data.Name
         holder.profileListMomotalkState.text = data.MomotalkState
-        try {
-            if (isPrefab) {
+        if (data.School != null) {
+            try {
                 val school = data.School?.let { context.assets.open("$it.png") }
                 holder.profileListSchoolImage.setImageBitmap(BitmapFactory.decodeStream(school))
-            } else {
+            }
+            catch (_: Exception) {}
+            try {
                 holder.profileListSchoolImage.setImageBitmap(BitmapFactory.decodeFile(data.School))
             }
+            catch (_: Exception) {}
         }
-        catch (_: Exception) {}
     }
 
     override fun getItemCount(): Int {
@@ -79,7 +80,7 @@ class ProfileListAdapter(private val context: Context, var profileList: List<Pro
         val view : View
 
         init {
-            profileListImage = itemView.findViewById<View>(R.id.conversationlist_Image) as ImageView
+            profileListImage = itemView.findViewById<View>(R.id.profilelist_Image) as ImageView
             profileListName = itemView.findViewById<View>(R.id.profilelist_Name) as TextView
             profileListMomotalkState = itemView.findViewById<View>(R.id.profilelist_MomotalkState) as TextView
             profileListSchoolImage = itemView.findViewById<View>(R.id.profilelist_SchoolImage) as ImageView

@@ -18,8 +18,6 @@ class ProfileListFragment : Fragment() {
 
     private var _binding: FragmentProfileListBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     private lateinit var tabLayout : TabLayout

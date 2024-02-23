@@ -7,7 +7,6 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-
     <EditText
         android:id="@+id/add_profile_name"
         android:layout_width="240dp"
@@ -59,7 +58,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:columnCount="4">
-
 
             <ImageButton
                 android:id="@+id/add_profile_avators_add"
@@ -226,7 +224,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:clickable="true"
-            android:text="@string/add_profile_cancel"
+            android:text="@string/add_cancel"
             android:textAppearance="@style/default_text"
             android:textColor="@color/momotalk_darkcyan"
             android:textSize="20sp"
@@ -240,7 +238,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:clickable="true"
-            android:text="@string/add_profile_confirm"
+            android:text="@string/add_confirm"
             android:textAppearance="@style/default_text"
             android:textColor="@color/momotalk_darkcyan"
             android:textSize="20sp"

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="570dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/add_conversation_title"
+        android:layout_width="240dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:hint="@string/add_conversation_title"
+        android:inputType="text"
+        android:lines="1"
+        android:selectAllOnFocus="true"
+        android:textAppearance="@style/default_text_dark"
+        android:textSize="16sp"
+        android:maxLength="20"
+        android:theme="@style/input_underline"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/add_conversation_cover"
+        android:textAppearance="@style/default_text_dark"
+        android:textSize="20sp"/>
+
+    <ImageButton
+        android:id="@+id/add_conversation_cover"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="70dp"
+        android:backgroundTint="#FFFFFF"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_addimage"
+        app:tint="@color/lightgray" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="45dp"
+        android:text="@string/add_conversation_profile"
+        android:textAppearance="@style/default_text_title"
+        android:textSize="20sp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <EditText
+            android:id="@+id/add_conversation_search_content"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/add_conversation_profile_hint"
+            android:inputType="text"
+            android:lines="1"
+            android:selectAllOnFocus="true"
+            android:textAppearance="@style/default_text_dark"
+            android:textSize="16sp"
+            android:maxLength="20"
+            android:theme="@style/input_underline"/>
+
+        <TextView
+            android:id="@+id/add_conversation_search_reset"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:clickable="true"
+            android:text="@string/add_conversation_profile_reset"
+            android:textAppearance="@style/default_text"
+            android:textColor="@color/momotalk_darkcyan"
+            android:textSize="20sp"
+            android:background="?android:attr/selectableItemBackground" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/add_conversation_profiles"
+        android:layout_width="200dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"/>
+
+    <EditText
+        android:id="@+id/add_conversation_tags"
+        android:layout_width="240dp"
+        android:layout_height="48dp"
+        android:selectAllOnFocus="true"
+        android:textAppearance="@style/default_text_dark"
+        android:textSize="16sp"
+        android:ems="10"
+        android:inputType="text"
+        android:maxLength="20"
+        android:layout_gravity="center"
+        android:theme="@style/input_underline" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/add_conversation_cancel"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="30dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:clickable="true"
+            android:text="@string/add_cancel"
+            android:textAppearance="@style/default_text"
+            android:textColor="@color/momotalk_darkcyan"
+            android:textSize="20sp"
+            android:background="?android:attr/selectableItemBackground" />
+
+        <TextView
+            android:id="@+id/add_conversation_confirm"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="120dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:clickable="true"
+            android:text="@string/add_confirm"
+            android:textAppearance="@style/default_text"
+            android:textColor="@color/momotalk_darkcyan"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_profile_description"
+            android:background="?android:attr/selectableItemBackground" />
+
+    </LinearLayout>
+
+</LinearLayout>
