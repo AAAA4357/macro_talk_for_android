@@ -1,18 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ConversationActivity">
+    tools:context=".ui.conversationlist.conversation.ConversationActivity"
+    android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/Conversation_DialogueList"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/sender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:theme="@style/input_underline"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                android:maxLines="5"
+                android:scrollbars="vertical"/>
+
+            <TextView
+                android:id="@+id/sender_send"
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:clickable="true"
+                android:text="@string/send"
+                android:textAppearance="@style/default_text"
+                android:textColor="@color/momotalk_darkcyan"
+                android:textSize="25sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/add_profile_description"
+                android:background="?android:attr/selectableItemBackground" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/conversation_personal"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_gravity="center_vertical"/>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/conversation_profile"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_gravity="center_vertical" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/conversation_avator"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_gravity="center_vertical" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+            <ImageButton
+                android:id="@+id/add_conversation_export"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:backgroundTint="#FFFFFF"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_export"
+                app:tint="@color/lightgray" />
+
+            <ImageButton
+                android:id="@+id/add_conversation_cover"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:backgroundTint="#FFFFFF"
+                android:scaleType="fitCenter"
+                android:src="@drawable/animated_ic_dialogue_extra"
+                app:tint="@color/lightgray" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/conversation_extra_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+                android:layout_margin="14dp"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/conversation_extra_knot"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:backgroundTint="@color/trans_lightgray"
+                    android:src="@drawable/ic_knot_heart"
+                    android:scaleType="fitCenter"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:text="@string/extra_knot"
+                    android:gravity="center"
+                    android:textAppearance="@style/default_text"
+                    android:textSize="15sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+                android:layout_margin="14dp"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/conversation_extra_reply"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:backgroundTint="@color/trans_lightgray"
+                    android:src="@drawable/ic_reply"
+                    android:scaleType="fitCenter"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:text="@string/extra_reply"
+                    android:gravity="center"
+                    android:textAppearance="@style/default_text"
+                    android:textSize="15sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+                android:layout_margin="14dp"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/conversation_extra_image"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:backgroundTint="@color/trans_lightgray"
+                    android:src="@drawable/ic_image"
+                    android:scaleType="fitCenter"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:text="@string/extra_image"
+                    android:gravity="center"
+                    android:textAppearance="@style/default_text"
+                    android:textSize="15sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+                android:layout_margin="14dp"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/conversation_extra_overwrite"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:backgroundTint="@color/trans_lightgray"
+                    android:src="@drawable/ic_overwrite"
+                    android:scaleType="fitCenter"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:text="@string/extra_overwrite"
+                    android:gravity="center"
+                    android:textAppearance="@style/default_text"
+                    android:textSize="15sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

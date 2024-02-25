@@ -43,11 +43,25 @@
         android:id="@+id/add_conversation_cover"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="70dp"
+        android:layout_marginStart="25dp"
         android:backgroundTint="#FFFFFF"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_addimage"
         app:tint="@color/lightgray" />
+
+    <TextView
+        android:id="@+id/add_conversation_cover_reset"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:clickable="true"
+        android:text="@string/add_conversation_profile_reset"
+        android:textAppearance="@style/default_text"
+        android:textColor="@color/momotalk_darkcyan"
+        android:textSize="20sp"
+        android:background="?android:attr/selectableItemBackground" />
 
     </LinearLayout>
 

@@ -4,10 +4,6 @@
     android:height="128dp"
     android:viewportWidth="128"
     android:viewportHeight="128">
-    <group android:name="background">
-        <path android:pathData="M 64 0 a 64 64 0 1 1 0 128 a 64 64 0 1 1 0 -128" android:fillColor="@color/lightgray"/>
-    </group>
-    <group android:name="student">
-        <path android:pathData="M 39 52 a 25 25 0 1 1 50 0 a 25 25 0 1 1 -50 0 M 24 101 a 40 25 0 1 1 80 0" android:fillColor="@color/gray"/>
-    </group>
+    <path android:pathData="M 64 0 a 64 64 0 1 1 0 128 a 64 64 0 1 1 0 -128" android:fillColor="@color/lightgray"/>
+    <path android:pathData="M 39 52 a 25 25 0 1 1 50 0 a 25 25 0 1 1 -50 0 M 24 101 a 40 25 0 1 1 80 0" android:fillColor="@color/gray"/>
 </vector>

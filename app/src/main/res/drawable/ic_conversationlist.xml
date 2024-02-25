@@ -4,10 +4,6 @@
     android:height="128dp"
     android:viewportWidth="128"
     android:viewportHeight="128">
-    <group android:name="convbackground">
-        <path android:pathData="M 19 30 m 15 0 l 60 0 a 15 15 0 0 1 15 15 l 0 25 a 15 15 0 0 1 -15 15 l -40 0 l -20 20 l 0 -20 a 15 15 0 0 1 -15 -15 l 0 -25 a 15 15 0 0 1 15 -15" android:fillColor="@color/white"/>
-    </group>
-    <group android:name="convdecoration">
-        <path android:pathData="M 19 30 m 15 27.5 a 5 5 0 1 1 10 0 a 5 5 0 1 1 -10 0 m 25 0 a 5 5 0 1 1 10 0 a 5 5 0 1 1 -10 0 m 25 0 a 5 5 0 1 1 10 0 a 5 5 0 1 1 -10 0" android:fillColor="@color/momotalk_pink1"/>
-    </group>
+    <path android:pathData="M 19 30 m 15 0 l 60 0 a 15 15 0 0 1 15 15 l 0 25 a 15 15 0 0 1 -15 15 l -40 0 l -20 20 l 0 -20 a 15 15 0 0 1 -15 -15 l 0 -25 a 15 15 0 0 1 15 -15" android:fillColor="@color/white"/>
+    <path android:pathData="M 19 30 m 15 27.5 a 5 5 0 1 1 10 0 a 5 5 0 1 1 -10 0 m 25 0 a 5 5 0 1 1 10 0 a 5 5 0 1 1 -10 0 m 25 0 a 5 5 0 1 1 10 0 a 5 5 0 1 1 -10 0" android:fillColor="@color/momotalk_pink1"/>
 </vector>

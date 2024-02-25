@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_profile_list"
-        android:name="com.Macro.macrotalkforandroid.ui.profilelist.ProfileListFragment"
+        android:name="com.macro.macrotalkforandroid.ui.profilelist.ProfileListFragment"
         android:label="@string/title_profile_list"
         tools:layout="@layout/fragment_profile_list" />
 
     <fragment
         android:id="@+id/navigation_conversation_list"
-        android:name="com.Macro.macrotalkforandroid.ui.conversationlist.ConversationListFragment"
+        android:name="com.macro.macrotalkforandroid.ui.conversationlist.ConversationListFragment"
         android:label="@string/title_conversation_list"
         tools:layout="@layout/fragment_conversation_list" />
 
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="com.Macro.macrotalkforandroid.ui.settings.SettingsFragment"
+        android:name="com.macro.macrotalkforandroid.ui.settings.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
 </navigation>

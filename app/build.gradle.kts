@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.Macro.macrotalkforandroid"
+    namespace = "com.macro.macrotalkforandroid"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.Macro.macrotalkforandroid"
+        applicationId = "com.macro.macrotalkforandroid"
         minSdk = 30
         targetSdk = 34
         versionCode = 1

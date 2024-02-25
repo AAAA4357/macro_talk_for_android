@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp">
+
+        <EditText
+            android:id="@+id/reply_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:hint="@string/extra_reply_hint"
+            android:inputType="text"
+            android:lines="1"
+            android:selectAllOnFocus="true"
+            android:textAppearance="@style/default_text_dark"
+            android:textSize="16sp"
+            android:maxLength="20"
+            android:theme="@style/input_underline"/>
+
+</LinearLayout>

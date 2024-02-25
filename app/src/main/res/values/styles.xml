@@ -4,4 +4,8 @@
         <item name="colorControlNormal">@color/momotalk_pink2</item>
         <item name="colorControlActivated">@color/momotalk_lightcyan</item>
     </style>
+    <style name="profile_check">
+        <item name="colorAccent">@color/momotalk_pink1</item>
+        <item name="colorControlNormal">@color/lightgray</item>
+    </style>
 </resources>

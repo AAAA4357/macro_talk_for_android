@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/ic_dialogue_extra">
+    <target
+        android:animation="@animator/anim_rotate_180"
+        android:name="bar1"/>
+
+    <target
+        android:animation="@animator/anim_rotate_90"
+        android:name="bar2"/>
+</animated-vector>
