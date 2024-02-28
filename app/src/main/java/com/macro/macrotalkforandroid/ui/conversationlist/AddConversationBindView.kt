@@ -41,9 +41,10 @@ import java.nio.file.StandardCopyOption
 import kotlin.math.ceil
 import kotlin.math.sqrt
 
-class AddConversationBindView(val resources : Resources, val context : Context, val fragment : ConversationListFragment) : OnBindView<CustomDialog>(
+class AddConversationBindView(val resources : Resources, val context : Context, val fragment : ConversationListFragment, val isRewrite : Boolean = false) : OnBindView<CustomDialog>(
     R.layout.fragment_addconversation
 ) {
+    var index: Int = -1
 
     lateinit var view : View
 
@@ -57,7 +58,7 @@ class AddConversationBindView(val resources : Resources, val context : Context, 
 
     override fun onBind(dialog: CustomDialog?, v: View?) {
         view = v!!
-        cover = view.findViewById(R.id.add_conversation_cover)
+        cover = view.findViewById(R.id.conversation_cover)
         cover.setOnClickListener(OnCoverUploadClick())
         val coverClear = view.findViewById<TextView>(R.id.add_conversation_cover_reset)
         coverClear.setOnClickListener(OnCoverClearClick())
@@ -66,13 +67,18 @@ class AddConversationBindView(val resources : Resources, val context : Context, 
         searchText.addTextChangedListener(OnSearchTextChanged())
         val searchClear = view.findViewById<TextView>(R.id.add_conversation_search_reset)
         searchClear.setOnClickListener(OnSearchTextClearClick())
-        val list = view.findViewById<RecyclerView>(R.id.add_conversation_profiles)
-        val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        val itemDecoration = DividerItemDecoration(context, RecyclerView.VERTICAL)
-        list.apply {
-            this.adapter = profileAdapter
-            this.layoutManager = layoutManager
-            this.addItemDecoration(itemDecoration)
+        if (!isRewrite) {
+            val list = view.findViewById<RecyclerView>(R.id.add_conversation_profiles)
+            val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            val itemDecoration = DividerItemDecoration(context, RecyclerView.VERTICAL)
+            list.apply {
+                this.adapter = profileAdapter
+                this.layoutManager = layoutManager
+                this.addItemDecoration(itemDecoration)
+            }
+        } else {
+            val list = view.findViewById<RecyclerView>(R.id.add_conversation_profiles)
+            list.visibility = View.GONE
         }
         val tags = view.findViewById<EditText>(R.id.add_conversation_tags)
         tags.hint = resources.getString(R.string.add_tags, Utils.SettingData.DefaultSplitChar)
@@ -109,7 +115,9 @@ class AddConversationBindView(val resources : Resources, val context : Context, 
                         permissions: MutableList<String>,
                         allGranted: Boolean
                     ) {
-                        uploadImage()
+                        val intent = Intent(Intent.ACTION_PICK,  null)
+                        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
+                        fragment.startActivityForResult(intent, 1)
                     }
 
                     override fun onDenied(
@@ -123,12 +131,6 @@ class AddConversationBindView(val resources : Resources, val context : Context, 
                         }
                     }
                 })
-        }
-
-        fun uploadImage() {
-            val intent = Intent(Intent.ACTION_PICK,  null)
-            intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
-            fragment.startActivityForResult(intent, 1)
         }
     }
 
@@ -168,12 +170,13 @@ class AddConversationBindView(val resources : Resources, val context : Context, 
         override fun onClick(v: View?) {
             val title = view.findViewById<EditText>(R.id.add_conversation_title)
             val profiles = profileAdapter.selectedProfiles
-            if (profiles.isEmpty()) {
+            if (profiles.isEmpty() && !isRewrite) {
                 PopTip.show("请选择至少一份档案")
                     .setBackgroundColor(resources.getColor(R.color.warning))
                     .setMessageTextInfo(TextInfo().apply {
                         this.fontColor = resources.getColor(R.color.white)
                     })
+                return
             }
             val tags = view.findViewById<EditText>(R.id.add_conversation_tags)
 

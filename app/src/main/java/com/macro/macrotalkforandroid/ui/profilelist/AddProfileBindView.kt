@@ -171,6 +171,7 @@ class AddProfileBindView(val isRewrite : Boolean, val resources : Resources, val
             val calendar = Calendar.getInstance()
             val datePickerDialog = DatePickerDialog(
                 context,
+                R.style.dialog_date,
                 { _, _, monthOfYear, dayOfMonth ->
                     run {
                         birthday = Birthday(monthOfYear + 1, dayOfMonth)
@@ -179,9 +180,11 @@ class AddProfileBindView(val isRewrite : Boolean, val resources : Resources, val
                 },
                 calendar[Calendar.YEAR],
                 calendar[Calendar.MONTH],
-                calendar[Calendar.DAY_OF_MONTH]
+                calendar[Calendar.DAY_OF_MONTH],
             )
             datePickerDialog.show()
+            datePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE).setTextColor(resources.getColor(R.color.momotalk_pink1))
+            datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(resources.getColor(R.color.momotalk_pink1))
         }
     }
 

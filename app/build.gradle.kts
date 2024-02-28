@@ -60,4 +60,5 @@ dependencies {
     implementation("org.xutils:xutils:3.8.5")
     implementation("com.github.getActivity:XXPermissions:18.6")
     implementation("io.github.meetsl:SCardView:1.0")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 }

@@ -6,7 +6,7 @@
         <item name="colorPrimaryVariant">@color/momotalk_pink2</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/lightcyan</item>
+        <item name="colorSecondary">@color/ex_lightcyan</item>
         <item name="colorSecondaryVariant">@color/momotalk_lightcyan</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->

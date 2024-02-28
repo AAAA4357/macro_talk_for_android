@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,11 @@ import com.macro.macrotalkforandroid.databinding.FragmentConversationListBinding
 import com.macro.macrotalkforandroid.ui.conversationlist.conversation.ConversationActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kongzue.dialogx.dialogs.CustomDialog
+import com.kongzue.dialogx.dialogs.PopMenu
+import com.macro.macrotalkforandroid.Profile
+import com.macro.macrotalkforandroid.Utils
+import com.macro.macrotalkforandroid.ui.profilelist.AddProfileBindView
+import com.macro.macrotalkforandroid.ui.profilelist.ProfileListAdapter
 
 class ConversationListFragment : Fragment() {
 
@@ -114,9 +120,32 @@ class ConversationListFragment : Fragment() {
         }
     }
 
-    inner class OnConversationItemLongClick : ConversationListAdapter.OnItemLongClickListener {
-        override fun OnItemLongClick(view: View?, data: Conversation?) {
+    inner class OnConversationItemLongClick() : ConversationListAdapter.OnItemLongClickListener {
+        var modifyConversationView = AddConversationBindView(resources, requireContext(), this@ConversationListFragment, true)
 
+        override fun OnItemLongClick(v: View?, data: Conversation?) {
+            PopMenu.show(v, listOf("删除", "修改"))
+                .setOverlayBaseView(false)
+                .setAlignGravity(Gravity.BOTTOM)
+                .setWidth(Utils.dip2px(requireContext(), 80f))
+                .setOnMenuItemClickListener { dialog, _, index ->
+                    dialog.dismiss()
+                    when (index) {
+                        0 -> {
+                            removeConversation(Utils.storageData.Conversations.indexOf(data!!))
+                        }
+                        1 -> {
+                            modifyConversationView.index = Utils.storageData.Conversations.indexOf(data!!)
+                            val dialog = CustomDialog.build()
+                            dialog.setCustomView(modifyConversationView)
+                            dialog.setMaskColor(resources.getColor(R.color.trans_lightgray))
+                            dialog.show()
+                            modifyConversationView.loadConversation(data)
+                        }
+                        else -> {}
+                    }
+                    false
+                }
         }
     }
 }

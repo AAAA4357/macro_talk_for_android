@@ -11,9 +11,12 @@
         android:id="@+id/Conversation_DialogueList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        android:padding="10dp"
+        android:layout_weight="1"
+        android:overScrollMode="never"/>
 
     <LinearLayout
+        android:id="@+id/basic_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -82,7 +85,7 @@
                 android:layout_weight="1"/>
 
             <ImageButton
-                android:id="@+id/add_conversation_export"
+                android:id="@+id/conversation_export"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:backgroundTint="#FFFFFF"
@@ -91,7 +94,7 @@
                 app:tint="@color/lightgray" />
 
             <ImageButton
-                android:id="@+id/add_conversation_cover"
+                android:id="@+id/conversation_cover"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:backgroundTint="#FFFFFF"

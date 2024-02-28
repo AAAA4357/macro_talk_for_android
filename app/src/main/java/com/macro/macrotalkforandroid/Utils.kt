@@ -3,6 +3,7 @@ package com.macro.macrotalkforandroid
 import android.content.Context
 import com.macro.macrotalkforandroid.MainApplication.Companion.mainContext
 import com.google.gson.Gson
+import java.io.File
 import java.math.BigInteger
 import java.security.MessageDigest
 
@@ -42,6 +43,21 @@ class Utils {
             md.update(str.toByteArray())
             val hashedPwd = BigInteger(1, md.digest()).toString(16)
             return hashedPwd
+        }
+
+        fun save() {
+            val saveFile = File("$appDataPath/Save_Data.json")
+            val gson = Gson()
+            val jsonText = gson.toJson(storageData, StorageData::class.java)
+            saveFile.writeText(jsonText)
+        }
+
+        fun load() {
+            val loadFile = File("$appDataPath/Save_Data.json")
+            if (!loadFile.exists()) return
+            val gson = Gson()
+            val data = gson.fromJson(loadFile.readText(), StorageData::class.java)
+            storageData = data
         }
     }
 }
@@ -143,11 +159,13 @@ data class Dialogue(
     val Type : DialogueType?,
     val Name : String?,
     val Avator : Image?,
-    val Content : Array<String>?,
-    val ImageContent : Image?
+    val Content : List<String>?,
+    val ImageContent : Image?,
+    val AvatorOverwrite : Image?,
+    val NameOverwrite : String?
 ) {
     companion object {
-        val Empty : Dialogue = Dialogue(null, null, null, null, null)
+        val Empty : Dialogue = Dialogue(null, null, null, null, null, null, null)
     }
 }
 

@@ -1,11 +1,14 @@
 package com.macro.macrotalkforandroid.ui.conversationlist.conversation
 
+import android.R.attr.height
+import android.R.attr.width
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,8 +17,15 @@ import com.macro.macrotalkforandroid.Dialogue
 import com.macro.macrotalkforandroid.DialogueType
 import com.macro.macrotalkforandroid.R
 
+
 class DialogueListAdapter(private val context : Context, val dialogues : MutableList<Dialogue>, val resources : Resources) :
     RecyclerView.Adapter<DialogueListAdapter.DialogueViewHodler>() {
+
+    var rewriteIndex : Int? = null
+
+    var insertIndex : Int? = null
+
+    var multiSelect : Boolean = false
 
     override fun getItemViewType(position: Int): Int {
         return if (dialogues[position] != Dialogue.Empty) {
@@ -50,6 +60,14 @@ class DialogueListAdapter(private val context : Context, val dialogues : Mutable
     }
 
     fun addDialogue(dialogue : Dialogue) {
+        rewriteIndex?.let {
+            changeDialogue(dialogue, it)
+            return
+        }
+        insertIndex?.let {
+            insertDialogue(dialogue, it)
+            return
+        }
         dialogues.add(dialogue)
         notifyItemInserted(dialogues.size - 1)
     }
@@ -84,8 +102,14 @@ class DialogueListAdapter(private val context : Context, val dialogues : Mutable
                     } else {
                         BitmapFactory.decodeFile(dialogue.Avator.ImageOriginalUri)
                     })
+                    dialogue.AvatorOverwrite?.let {
+                        avatorView.setImageBitmap(BitmapFactory.decodeFile(dialogue.Avator.ImageOriginalUri))
+                    }
                     nameView = view.findViewById(R.id.Dialogue_Student1_Name)
                     nameView.text = dialogue.Name
+                    dialogue.NameOverwrite?.let {
+                        nameView.text = dialogue.NameOverwrite
+                    }
                     contentView = view.findViewById(R.id.Dialogue_Student1_Content)
                     contentView.text = dialogue.Content!![0]
                 }
@@ -107,7 +131,7 @@ class DialogueListAdapter(private val context : Context, val dialogues : Mutable
                 }
                 DialogueType.Reply -> {
                     contentsView = view.findViewById(R.id.Dialogue_Reply_Contents)
-                    val adapter = ReplyListAdapter(dialogue.Content!!.toList())
+                    val adapter = ReplyListAdapter(dialogue.Content!!)
                     val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                     contentsView.apply {
                         this.adapter = adapter
@@ -116,9 +140,19 @@ class DialogueListAdapter(private val context : Context, val dialogues : Mutable
                 }
                 DialogueType.ImageStudent1 -> {
                     avatorView = view.findViewById(R.id.Dialogue_Student1_Image_Avator)
-                    avatorView.setImageBitmap(BitmapFactory.decodeFile(dialogue.Avator!!.ImageOriginalUri))
+                    avatorView.setImageBitmap(if (!dialogue.Avator!!.isNotPrefab) {
+                        BitmapFactory.decodeStream(context.assets.open(dialogue.Avator.ImageName + ".jpg"))
+                    } else {
+                        BitmapFactory.decodeFile(dialogue.Avator.ImageOriginalUri)
+                    })
+                    dialogue.AvatorOverwrite?.let {
+                        avatorView.setImageBitmap(BitmapFactory.decodeFile(dialogue.Avator.ImageOriginalUri))
+                    }
                     nameView = view.findViewById(R.id.Dialogue_Student1_Image_Name)
                     nameView.text = dialogue.Name
+                    dialogue.NameOverwrite?.let {
+                        nameView.text = dialogue.NameOverwrite
+                    }
                     contentImageView = view.findViewById(R.id.Dialogue_Student1_Image_Content)
                     contentImageView.setImageBitmap(BitmapFactory.decodeFile(dialogue.ImageContent!!.ImageOriginalUri))
                 }
@@ -145,11 +179,18 @@ class DialogueListAdapter(private val context : Context, val dialogues : Mutable
                 }
                 true
             }
+
+            val check = view.findViewById<CheckBox>(R.id.check)
+            if (multiSelect) {
+                check.visibility = View.VISIBLE
+            } else {
+                check.visibility = View.GONE
+            }
         }
 
         inner class ReplyListAdapter(val replyList : List<String>) : RecyclerView.Adapter<ReplyListAdapter.ReplyItemViewHolder>() {
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReplyItemViewHolder {
-                val itemView = View.inflate(context, R.layout.dialogue_reply_item, null)
+                val itemView = LayoutInflater.from(context).inflate(R.layout.dialogue_reply_item, parent, false)
                 return ReplyItemViewHolder(itemView)
             }
 

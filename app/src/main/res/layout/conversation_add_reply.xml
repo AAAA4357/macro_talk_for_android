@@ -1,19 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="40dp">
+    android:maxHeight="120dp"
+    android:layout_margin="20dp">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxHeight="120dp">
+        android:layout_height="160dp">
 
-        <androidx.recyclerview.widget.RecyclerView
+        <LinearLayout
             android:id="@+id/reply_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <ImageButton
+                    android:id="@+id/reply_add"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:backgroundTint="#FFFFFF"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_reply_add"/>
+
+                <ImageButton
+                    android:id="@+id/reply_remove"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:backgroundTint="#FFFFFF"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_reply_remove"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </ScrollView>
 

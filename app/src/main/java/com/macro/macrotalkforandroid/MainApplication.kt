@@ -18,7 +18,9 @@ class MainApplication : Application() {
 
 
         x.Ext.init(this)
-        x.Ext.setDebug(BuildConfig.DEBUG);
+        x.Ext.setDebug(BuildConfig.DEBUG)
+
+        Utils.load()
     }
 
     companion object {
