@@ -221,7 +221,8 @@
                             android:paddingTop="10dp"
                             android:paddingHorizontal="5dp"
                             android:textAlignment="center"
-                            android:textAppearance="@style/default_text"/>
+                            android:textAppearance="@style/default_text"
+                            android:gravity="center_horizontal" />
                 
                 </ScrollView>
                 <Button

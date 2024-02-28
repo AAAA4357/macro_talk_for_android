@@ -46,7 +46,8 @@
         android:layout_marginTop="5dp"
         android:text="@string/add_profile_avators"
         android:textAppearance="@style/default_text_dark"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        android:layout_marginLeft="30dp" />
 
     <ScrollView
         android:layout_width="240dp"
@@ -228,7 +229,8 @@
             android:textAppearance="@style/default_text"
             android:textColor="@color/momotalk_darkcyan"
             android:textSize="20sp"
-            android:background="?android:attr/selectableItemBackground" />
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_marginLeft="30dp" />
 
         <TextView
             android:id="@+id/add_profile_confirm"
@@ -245,7 +247,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_profile_description"
-            android:background="?android:attr/selectableItemBackground" />
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_marginLeft="120dp" />
 
     </LinearLayout>
 

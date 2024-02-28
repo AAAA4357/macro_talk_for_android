@@ -37,7 +37,8 @@
         android:layout_marginBottom="15dp"
         android:text="@string/add_conversation_cover"
         android:textAppearance="@style/default_text_dark"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:layout_marginLeft="30dp" />
 
     <ImageButton
         android:id="@+id/conversation_cover"
@@ -47,7 +48,8 @@
         android:backgroundTint="#FFFFFF"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_addimage"
-        app:tint="@color/lightgray" />
+        app:tint="@color/lightgray"
+        android:layout_marginLeft="25dp" />
 
     <TextView
         android:id="@+id/add_conversation_cover_reset"
@@ -61,7 +63,8 @@
         android:textAppearance="@style/default_text"
         android:textColor="@color/momotalk_darkcyan"
         android:textSize="20sp"
-        android:background="?android:attr/selectableItemBackground" />
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_marginLeft="10dp" />
 
     </LinearLayout>
 
@@ -72,7 +75,8 @@
         android:layout_marginStart="45dp"
         android:text="@string/add_conversation_profile"
         android:textAppearance="@style/default_text_title"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:layout_marginLeft="45dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -105,7 +109,8 @@
             android:textAppearance="@style/default_text"
             android:textColor="@color/momotalk_darkcyan"
             android:textSize="20sp"
-            android:background="?android:attr/selectableItemBackground" />
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_marginLeft="10dp" />
 
     </LinearLayout>
 
@@ -145,7 +150,8 @@
             android:textAppearance="@style/default_text"
             android:textColor="@color/momotalk_darkcyan"
             android:textSize="20sp"
-            android:background="?android:attr/selectableItemBackground" />
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_marginLeft="30dp" />
 
         <TextView
             android:id="@+id/add_conversation_confirm"
@@ -162,7 +168,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_profile_description"
-            android:background="?android:attr/selectableItemBackground" />
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_marginLeft="120dp" />
 
     </LinearLayout>
 

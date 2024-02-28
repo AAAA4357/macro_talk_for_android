@@ -24,7 +24,9 @@
         android:layout_marginBottom="5dp"
         android:layout_marginStart="60dp"
         android:maxWidth="300dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="60dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"

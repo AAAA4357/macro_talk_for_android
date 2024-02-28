@@ -121,14 +121,16 @@
             android:layout_width="60dp"
             android:layout_height="230dp"
             android:layout_marginStart="20dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/dialogue_preview"
             android:layout_width="60dp"
             android:layout_height="230dp"
             android:layout_marginEnd="20dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:layout_marginRight="20dp" />
 
     </LinearLayout>
 
@@ -149,7 +151,8 @@
             android:textAppearance="@style/default_text"
             android:textColor="@color/momotalk_darkcyan"
             android:textSize="20sp"
-            android:background="?android:attr/selectableItemBackground" />
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_marginLeft="30dp" />
 
         <TextView
             android:id="@+id/confirm"
@@ -167,7 +170,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_profile_description"
-            android:background="?android:attr/selectableItemBackground" />
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_marginLeft="120dp" />
 
     </LinearLayout>
 
