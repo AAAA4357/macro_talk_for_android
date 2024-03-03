@@ -15,16 +15,16 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name="com.macro.macrotalkforandroid.MainApplication"
-        android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.MacroTalkForAndroid"
-        tools:targetApi="31">
+            android:name="com.macro.macrotalkforandroid.MainApplication"
+            android:allowBackup="true"
+            android:dataExtractionRules="@xml/data_extraction_rules"
+            android:fullBackupContent="@xml/backup_rules"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@style/Theme.MacroTalkForAndroid"
+            tools:targetApi="31" tools:ignore="MissingClass">
         <activity
             android:name="com.macro.macrotalkforandroid.ui.conversationlist.conversation.ConversationActivity"
             android:exported="true" />

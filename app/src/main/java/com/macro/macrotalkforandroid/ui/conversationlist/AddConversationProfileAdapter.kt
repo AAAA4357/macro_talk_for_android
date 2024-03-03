@@ -20,15 +20,20 @@ import com.macro.macrotalkforandroid.R
 
 class AddConversationProfileAdapter(private val context: Context, var profileList: List<Profile>) :
     RecyclerView.Adapter<AddConversationProfileAdapter.AddConversationProfileViewHodler>(), Filterable {
+
+    // 原始的配置文件列表数据
     val sourceProfileList = profileList
 
+    // 已选择的配置文件列表
     var selectedProfiles : List<Profile> = listOf()
 
+    // 创建 ViewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddConversationProfileViewHodler {
         val itemView = LayoutInflater.from(context).inflate(R.layout.add_conversation_profile_item, parent, false)
         return AddConversationProfileViewHodler(itemView)
     }
 
+    // 绑定数据到 ViewHolder
     override fun onBindViewHolder(holder: AddConversationProfileViewHodler, position: Int) {
         val data: Profile = profileList[position]
         holder.profileIsCheck.setOnCheckedChangeListener(AddConversationProfileCheckChanged(position))
@@ -43,10 +48,12 @@ class AddConversationProfileAdapter(private val context: Context, var profileLis
         holder.profileIsCheck.isChecked = selectedProfiles.contains(profileList[position])
     }
 
+    // 获取配置文件列表项数量
     override fun getItemCount(): Int {
         return profileList.size
     }
 
+    // 获取过滤器
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(charSequence: CharSequence): FilterResults {
@@ -75,6 +82,7 @@ class AddConversationProfileAdapter(private val context: Context, var profileLis
         }
     }
 
+    // 在 ViewHolder 添加到窗口时执行动画
     override fun onViewAttachedToWindow(holder: AddConversationProfileViewHodler) {
         super.onViewAttachedToWindow(holder)
 
@@ -82,6 +90,7 @@ class AddConversationProfileAdapter(private val context: Context, var profileLis
         holder.view.startAnimation(animation)
     }
 
+    // 内部 ViewHolder 类
     inner class AddConversationProfileViewHodler(itemView : View) : ViewHolder(itemView) {
         val profileImage : ImageView
         val profileName : TextView
@@ -98,6 +107,7 @@ class AddConversationProfileAdapter(private val context: Context, var profileLis
         }
     }
 
+    // 选择状态改变监听器
     inner class AddConversationProfileCheckChanged(val index : Int) : CompoundButton.OnCheckedChangeListener {
         override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
             if (isChecked) {

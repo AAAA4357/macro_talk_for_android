@@ -3,12 +3,14 @@ package com.macro.macrotalkforandroid.ui.profilelist.profile
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.viewpager2.widget.ViewPager2
 import com.macro.macrotalkforandroid.Profile
 import com.macro.macrotalkforandroid.R
 import com.macro.macrotalkforandroid.Utils
+import com.macro.macrotalkforandroid.ui.conversationlist.conversation.ConversationActivity
 
 class ProfileActivity() : AppCompatActivity() {
     companion object {
@@ -21,6 +23,7 @@ class ProfileActivity() : AppCompatActivity() {
 
         setTitle(R.string.profile_title)
 
+        // 获取ViewPager2并设置适配器
         val avators = findViewById<ViewPager2>(R.id.profile_avators)
         val adapter = ProfileAvatorAdapter()
         adapter.context = this@ProfileActivity
@@ -29,6 +32,7 @@ class ProfileActivity() : AppCompatActivity() {
             this.adapter = adapter
         }
 
+        // 获取并设置各个学生信息
         val name = findViewById<TextView>(R.id.profile_name)
         val momotalkstate = findViewById<TextView>(R.id.profile_momotalkstate)
         val fullname = findViewById<TextView>(R.id.profile_fullname)
@@ -67,10 +71,13 @@ class ProfileActivity() : AppCompatActivity() {
         if (displayProfile.Description != null) {
             description.text = displayProfile.Description
         } else {
+            // 如果没有描述，则隐藏相关UI元素
             val image = findViewById<ImageView>(R.id.profile_downerbg)
             val title = findViewById<TextView>(R.id.profile_downertitle)
             image.visibility = View.INVISIBLE
             title.visibility = View.INVISIBLE
         }
+
+
     }
 }

@@ -26,34 +26,42 @@ import com.macro.macrotalkforandroid.ui.profilelist.ProfileListAdapter
 
 class ConversationListFragment : Fragment() {
 
+    // 界面绑定对象
     private var _binding: FragmentConversationListBinding? = null
-
     private val binding get() = _binding!!
 
+    // 会话列表适配器
     lateinit var conversationAdapter : ConversationListAdapter
 
+    // 添加会话视图
     lateinit var addConversationView : AddConversationBindView
 
+    // 创建视图
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        // 绑定布局
         _binding = FragmentConversationListBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        // 初始化会话适配器
         conversationAdapter = ConversationListAdapter(requireContext())
 
+        // 初始化添加会话视图
         addConversationView = AddConversationBindView(resources, requireContext(), this@ConversationListFragment)
 
         return root
     }
 
+    // 销毁视图
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
+    // 开始方法
     override fun onStart() {
         super.onStart()
         val list = binding.root.findViewById<RecyclerView>(R.id.conversation_list)
@@ -65,6 +73,7 @@ class ConversationListFragment : Fragment() {
         else {
             empty.visibility = View.INVISIBLE
         }
+        // 设置点击监听器和长按监听器
         conversationAdapter.setOnItemClickListener(OnConversationItemClick())
         conversationAdapter.setOnItemLongClickListener(OnConversationItemLongClick())
         list.apply {
@@ -75,6 +84,7 @@ class ConversationListFragment : Fragment() {
         addConversation.setOnClickListener(AddConversationClick())
     }
 
+    // 处理ActivityResult
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && data != null) {
@@ -84,12 +94,14 @@ class ConversationListFragment : Fragment() {
         }
     }
 
+    // 添加会话
     fun addConversation(conversation : Conversation) {
         conversationAdapter.addItem(conversation)
         val empty = binding.root.findViewById<TextView>(R.id.conversation_empty)
         empty.visibility = View.INVISIBLE
     }
 
+    // 删除会话
     fun removeConversation(index : Int) {
         conversationAdapter.removeItem(index)
         if (conversationAdapter.conversationList.size == 0) {
@@ -98,10 +110,12 @@ class ConversationListFragment : Fragment() {
         }
     }
 
+    // 替换会话
     fun replaceConversation(index : Int, newConversation : Conversation) {
         conversationAdapter.replaceItem(index, newConversation)
     }
 
+    // 添加会话点击监听器
     inner class AddConversationClick : View.OnClickListener {
         override fun onClick(v: View?) {
             addConversationView = AddConversationBindView(resources, requireContext(), this@ConversationListFragment)
@@ -112,6 +126,7 @@ class ConversationListFragment : Fragment() {
         }
     }
 
+    // 会话点击监听器
     inner class OnConversationItemClick : ConversationListAdapter.OnItemClickListener {
         override fun OnItemClick(view: View?, data: Conversation?) {
             ConversationActivity.conversation = data!!
@@ -120,6 +135,7 @@ class ConversationListFragment : Fragment() {
         }
     }
 
+    // 会话长按监听器
     inner class OnConversationItemLongClick() : ConversationListAdapter.OnItemLongClickListener {
         var modifyConversationView = AddConversationBindView(resources, requireContext(), this@ConversationListFragment, true)
 
