@@ -10,45 +10,67 @@ import androidx.recyclerview.widget.RecyclerView
 import com.macro.macrotalkforandroid.Image
 import com.macro.macrotalkforandroid.R
 
-class ConversationAvatorAdapter(var images : List<Image>)
-    : RecyclerView.Adapter<ConversationAvatorAdapter.ConversationAvatorViewHolder>() {
 
-    lateinit var context : Context
+ // 会话头像适配器用于显示头像列表，并处理点击事件回调。
 
+class ConversationAvatorAdapter(var images: List<Image>) :
+    RecyclerView.Adapter<ConversationAvatorAdapter.ConversationAvatorViewHolder>() {
+
+    lateinit var context: Context
+
+    //创建ViewHolder并绑定布局
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConversationAvatorViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.conversation_viewpager_item,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.conversation_viewpager_item, parent, false)
         return ConversationAvatorViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ConversationAvatorAdapter.ConversationAvatorViewHolder, position: Int) {
-        holder.itemImage.setImageBitmap(
-            if (!images[position].isNotPrefab) {
-                BitmapFactory.decodeStream(context.assets.open(images[position].ImageName + ".jpg"))
-            } else {
-                BitmapFactory.decodeFile(images[position].ImageOriginalUri)
-            }
-        )
+    //绑定ViewHolder的数据
+
+    override fun onBindViewHolder(holder: ConversationAvatorViewHolder, position: Int) {
+        holder.bindImage(images[position])
     }
 
+
+      //返回列表项的数量
     override fun getItemCount(): Int {
         return images.size
     }
 
-    inner class ConversationAvatorViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        val itemImage : ImageView
+
+    //头像ViewHolder类
+    inner class ConversationAvatorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val itemImage: ImageView
 
         init {
             itemImage = itemView.findViewById(R.id.item_image)
 
+            // 设置点击事件监听器
             itemView.setOnClickListener { v ->
-                if (onItemClickListener != null) {
-                    onItemClickListener!!.OnItemClick(v, layoutPosition)
-                }
+                onItemClickListener?.OnItemClick(v, layoutPosition)
             }
+        }
+
+
+        //绑定头像图片到ImageView
+
+        fun bindImage(image: Image) {
+            itemImage.setImageBitmap(
+                if (!image.isNotPrefab) {
+                    // 从资源中加载头像图片
+                    BitmapFactory.decodeStream(context.assets.open(image.ImageName + ".jpg"))
+                } else {
+                    // 从文件中加载头像图片
+                    BitmapFactory.decodeFile(image.ImageOriginalUri)
+                }
+            )
         }
     }
 
-    private var onItemClickListener : ConversationActivity.OnItemClickListener? = null
+    // 点击事件监听器
+    private var onItemClickListener: ConversationActivity.OnItemClickListener? = null
+
+
+     //设置点击事件监听器
 
     fun setOnItemClickListener(onItemClickListener: ConversationActivity.OnItemClickListener) {
         this.onItemClickListener = onItemClickListener

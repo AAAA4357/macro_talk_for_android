@@ -35,6 +35,7 @@ import com.macro.macrotalkforandroid.R
 import com.macro.macrotalkforandroid.Utils
 import com.macro.macrotalkforandroid.ui.profilelist.profile.ProfileActivity
 
+// 学生资料列表的标签页
 class ProfileTab(val isPrefab : Boolean) : Fragment() {
     lateinit var profileList : List<Profile>
 
@@ -43,6 +44,7 @@ class ProfileTab(val isPrefab : Boolean) : Fragment() {
     lateinit var addProfileClick : AddProfileClick
 
     companion object {
+        // 创建新的 ProfileTab 实例
         fun newInstance(isPrefab : Boolean) : ProfileTab {
             val args = Bundle()
             args.putBoolean("isPrefab", isPrefab)
@@ -55,10 +57,13 @@ class ProfileTab(val isPrefab : Boolean) : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // 根据是否为预制档案初始化学生资料列表
         profileList = if (isPrefab) Utils.prefabData.Profiles else Utils.storageData.Profiles
 
+        // 初始化学生资料列表适配器
         profileAdapter = ProfileListAdapter(requireActivity(), profileList, isPrefab)
 
+        // 如果不是预制档案，初始化添加资料按钮点击事件处理
         if (!isPrefab) {
             addProfileClick = AddProfileClick()
         }
@@ -68,6 +73,7 @@ class ProfileTab(val isPrefab : Boolean) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // 加载布局文件
         return inflater.inflate(R.layout.fragment_profile_tab, container, false)
     }
 
@@ -76,12 +82,15 @@ class ProfileTab(val isPrefab : Boolean) : Fragment() {
 
         val list = requireView().findViewById<RecyclerView>(R.id.profile_list)
         val empty = requireView().findViewById<TextView>(R.id.profile_empty)
+
+        // 如果学生资料列表为空，显示空提示
         if (profileList.isEmpty()) {
             empty.visibility = View.VISIBLE
-        }
-        else {
+        } else {
             empty.visibility = View.INVISIBLE
         }
+
+        // 根据是否为预制档案，设置添加资料按钮的可见性和点击事件
         val isPrefab = requireArguments().getBoolean("isPrefab")
         if (isPrefab) {
             val addProfile = requireView().findViewById<FloatingActionButton>(R.id.profile_addprofile)
@@ -90,31 +99,18 @@ class ProfileTab(val isPrefab : Boolean) : Fragment() {
             val addProfile = requireView().findViewById<FloatingActionButton>(R.id.profile_addprofile)
             addProfile.setOnClickListener(addProfileClick)
         }
-        profileAdapter.setOnItemClickListener(OnProfileItemClick())
-        val layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-        val itemDecoration = SuspendItemDecoration(requireContext()).apply {
-            dividerDrawable = resources.getDrawable(R.drawable.ic_list_divider)
-            groupDividerDrawable = resources.getDrawable(R.drawable.ic_list_divider_wider)
-            profiles = profileList
-        }
-        if (list.itemDecorationCount == 0 && isPrefab) {
-            list.apply {
-                this.adapter = profileAdapter
-                this.layoutManager = layoutManager
-                addItemDecoration(itemDecoration)
-            }
-        } else if (list.itemDecorationCount == 0 && !isPrefab) {
-            profileAdapter.setOnItemLongClickListener(OnProfileItemLongClick())
-            list.apply {
-                this.adapter = profileAdapter
-                this.layoutManager = layoutManager
-            }
+
+        // 设置学生资料列表适配器和布局管理器
+        list.apply {
+            this.adapter = profileAdapter
+            this.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        // 处理从相册选择头像后的结果
         if (resultCode == Activity.RESULT_OK && data != null) {
             val file = Utils.uriToFileQ(requireContext(), data.data!!)!!
             val bitmap = BitmapFactory.decodeFile(file.absolutePath)
@@ -122,6 +118,7 @@ class ProfileTab(val isPrefab : Boolean) : Fragment() {
         }
     }
 
+    // 添加学生资料
     fun addProfile(profile : Profile) {
         profileList += profile
         profileAdapter.addItem(profile)
@@ -129,6 +126,7 @@ class ProfileTab(val isPrefab : Boolean) : Fragment() {
         empty.visibility = View.INVISIBLE
     }
 
+    // 删除学生资料
     fun removeProfile(profile : Profile) {
         val index = profileList.indexOf(profile)
         profileList -= profile
@@ -139,6 +137,7 @@ class ProfileTab(val isPrefab : Boolean) : Fragment() {
         }
     }
 
+    // 替换学生资料
     fun replaceProfile(index : Int, profile : Profile) {
         val list = profileList.toMutableList()
         list[index] = profile
@@ -146,6 +145,7 @@ class ProfileTab(val isPrefab : Boolean) : Fragment() {
         profileAdapter.replaceItem(profile, index)
     }
 
+    // 学生点击学生资料列表项的处理
     inner class OnProfileItemClick() : ProfileListAdapter.OnItemClickListener {
         override fun OnItemClick(view: View?, data: Profile?) {
             ProfileActivity.displayProfile = data!!
@@ -154,6 +154,7 @@ class ProfileTab(val isPrefab : Boolean) : Fragment() {
         }
     }
 
+    // 学生长按学生资料列表项的处理
     inner class OnProfileItemLongClick() : ProfileListAdapter.OnItemLongClickListener {
         var modifyProfileView = AddProfileBindView(true, resources, requireContext(), this@ProfileTab)
 
@@ -174,7 +175,7 @@ class ProfileTab(val isPrefab : Boolean) : Fragment() {
                             dialog.setCustomView(modifyProfileView)
                             dialog.setMaskColor(resources.getColor(R.color.trans_lightgray))
                             dialog.show()
-                            for (i in 0..<modifyProfileView.avatorList.size) {
+                            for (i in 0 until modifyProfileView.avatorList.size) {
                                 modifyProfileView.removeAvator(modifyProfileView.avatorList[0])
                             }
                             for (image in data.Images) {
@@ -189,6 +190,7 @@ class ProfileTab(val isPrefab : Boolean) : Fragment() {
         }
     }
 
+    // 添加学生资料按钮的点击事件处理
     inner class AddProfileClick() : OnClickListener {
         var addProfileView = AddProfileBindView(false, resources, requireContext(), this@ProfileTab)
 
@@ -201,6 +203,7 @@ class ProfileTab(val isPrefab : Boolean) : Fragment() {
         }
     }
 
+    // 设置分组悬浮标题的 RecyclerView.ItemDecoration
     inner class SuspendItemDecoration(val context: Context) : RecyclerView.ItemDecoration() {
 
         var dividerDrawable: Drawable? = null
@@ -239,6 +242,7 @@ class ProfileTab(val isPrefab : Boolean) : Fragment() {
             textPaint.typeface = textTypeface
         }
 
+        // 绘制分组标题和分割线
         override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
             super.onDraw(c, parent, state)
             val list = profiles ?: return
@@ -253,6 +257,7 @@ class ProfileTab(val isPrefab : Boolean) : Fragment() {
                 val params = child.layoutParams as RecyclerView.LayoutParams
                 val position = params.viewLayoutPosition
 
+                // 获取当前学生资料的首字母拼音
                 val currentInitial = PinyinHelper.toPinyin(list[position].Name[0].toString(), PinyinStyleEnum.FIRST_LETTER).toString().uppercase()
                 val lastInitial = if (position >= 1) {
                     PinyinHelper.toPinyin(list[position - 1].Name[0].toString(), PinyinStyleEnum.FIRST_LETTER).toString().uppercase()
@@ -285,6 +290,7 @@ class ProfileTab(val isPrefab : Boolean) : Fragment() {
             c.restore()
         }
 
+        // 绘制悬浮标题
         override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
             super.onDrawOver(c, parent, state)
 
@@ -300,6 +306,7 @@ class ProfileTab(val isPrefab : Boolean) : Fragment() {
 
             val child = parent.findViewHolderForLayoutPosition(position)!!.itemView
 
+            // 获取当前可见分组的首字母拼音
             val currentInitial = PinyinHelper.toPinyin(list[position].Name[0].toString(), PinyinStyleEnum.FIRST_LETTER).toString().uppercase()
             val nextInitial = if (position + 1 < list.size) {
                 PinyinHelper.toPinyin(list[position + 1].Name[0].toString(), PinyinStyleEnum.FIRST_LETTER).toString().uppercase()
@@ -332,6 +339,7 @@ class ProfileTab(val isPrefab : Boolean) : Fragment() {
             c.restore()
         }
 
+        // 设置分组标题和分割线的偏移量
         override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
             super.getItemOffsets(outRect, view, parent, state)
             outRect.set(0, 0, 0, 0)
@@ -339,6 +347,7 @@ class ProfileTab(val isPrefab : Boolean) : Fragment() {
 
             val position = (view.layoutParams as RecyclerView.LayoutParams).viewLayoutPosition
 
+            // 获取当前学生资料的首字母拼音
             val currentInitial = PinyinHelper.toPinyin(list[position].Name[0].toString(), PinyinStyleEnum.FIRST_LETTER).toString().uppercase()
             val lastInitial = if (position >= 1) {
                 PinyinHelper.toPinyin(list[position - 1].Name[0].toString(), PinyinStyleEnum.FIRST_LETTER).toString().uppercase()
@@ -356,9 +365,9 @@ class ProfileTab(val isPrefab : Boolean) : Fragment() {
             outRect.set(0, height, 0, 0)
         }
 
+        // 将 sp 单位转换为 px
         fun Context.sp2px(sp : Float) : Float =
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, resources.displayMetrics)
     }
 }
-
 

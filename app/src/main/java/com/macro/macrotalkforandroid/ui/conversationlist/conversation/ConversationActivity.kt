@@ -51,26 +51,29 @@ import java.nio.file.StandardCopyOption
 
 class ConversationActivity : AppCompatActivity() {
     companion object {
-        lateinit var conversation : Conversation
+        lateinit var conversation: Conversation
+    // 对话实例
     }
 
-    var extraExpanded : Boolean = false
+    var extraExpanded: Boolean = false
+    // 额外展开标志
 
-    lateinit var avatorAdapter : ConversationAvatorAdapter
-
-    lateinit var dialogueAdapter : DialogueListAdapter
-
+    lateinit var avatorAdapter: ConversationAvatorAdapter
+    // 头像适配器
+    lateinit var dialogueAdapter: DialogueListAdapter
+    // 对话列表适配器
     lateinit var conversationOverwriteBindView: ConversationOverwriteBindView
-
+    // 对话覆盖视图绑定
     var counter = 0
-
+    // 计数器
     var imagecounter = 0
-
-    var avatorOverwrite : String? = null
-
-    var nameOverwrite : String? = null
-
-    var multiSelect : Boolean = false
+    // 图片计数器
+    var avatorOverwrite: String? = null
+    // 头像覆盖
+    var nameOverwrite: String? = null
+    // 名称覆盖
+    var multiSelect: Boolean = false
+    // 多选模式标志
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
