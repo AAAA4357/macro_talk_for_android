@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Bitmap
+import android.os.Build
 import android.provider.MediaStore
 import android.view.Gravity
 import android.view.View
@@ -15,6 +16,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.macro.macrotalkforandroid.Birthday
 import com.macro.macrotalkforandroid.Image
 import com.macro.macrotalkforandroid.Profile
@@ -120,28 +122,32 @@ class AddProfileBindView(val isRewrite : Boolean, val resources : Resources, val
 
     inner class onImageUploadClick(val context : Context, val tab : ProfileTab) : View.OnClickListener {
         override fun onClick(v: View?) {
-            XXPermissions.with(context)
-                .permission(Permission.READ_MEDIA_IMAGES)
-                .request(object : OnPermissionCallback {
+            try {
+                uploadImage()
+            } catch(_:Exception) {
+                XXPermissions.with(context)
+                    .permission(Permission.READ_MEDIA_IMAGES)
+                    .request(object : OnPermissionCallback {
 
-                    override fun onGranted(
-                        permissions: MutableList<String>,
-                        allGranted: Boolean
-                    ) {
-                        uploadImage()
-                    }
-
-                    override fun onDenied(
-                        permissions: MutableList<String>,
-                        doNotAskAgain: Boolean
-                    ) {
-                        if (doNotAskAgain) {
-                            Toast.makeText(context, "请手动授予权限并重新上传图片", Toast.LENGTH_LONG).show()
-                        } else {
-                            Toast.makeText(context, "请授予权限", Toast.LENGTH_SHORT).show()
+                        override fun onGranted(
+                            permissions: MutableList<String>,
+                            allGranted: Boolean
+                        ) {
+                            uploadImage()
                         }
-                    }
-                })
+
+                        override fun onDenied(
+                            permissions: MutableList<String>,
+                            doNotAskAgain: Boolean
+                        ) {
+                            if (doNotAskAgain) {
+                                Toast.makeText(context, "请手动授予权限并重新上传图片", Toast.LENGTH_LONG).show()
+                            } else {
+                                Toast.makeText(context, "请授予权限", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    })
+            }
         }
 
         fun uploadImage() {
@@ -202,6 +208,7 @@ class AddProfileBindView(val isRewrite : Boolean, val resources : Resources, val
     }
 
     inner class OnConfirmClick(val dialog : CustomDialog, val index : Int) : View.OnClickListener {
+        @RequiresApi(Build.VERSION_CODES.O)
         override fun onClick(v: View?) {
             val name = view.findViewById<EditText>(R.id.add_profile_name)
             val layout = view.findViewById<GridLayout>(R.id.add_profile_avators)
@@ -226,13 +233,7 @@ class AddProfileBindView(val isRewrite : Boolean, val resources : Resources, val
             val firstname = view.findViewById<EditText>(R.id.add_profile_firstname)
             for (index : Int in 0..avatorList.size - 1) {
                 val file = File(avatorList[index])
-                val newfile = File(Utils.appDataPath + "/" + Utils.toMD5(file.name))
-                if (newfile.exists()) {
-                    Files.copy(file.toPath(), newfile.toPath(), StandardCopyOption.REPLACE_EXISTING)
-                } else {
-                    Files.copy(file.toPath(), newfile.toPath())
-                }
-                val image = Image(name.text.toString() + "[" + index + "]", newfile.absolutePath, true)
+                val image = Image(name.text.toString() + "[" + index + "]", file.absolutePath, true)
                 imageList += image
             }
             val age = view.findViewById<EditText>(R.id.add_profile_age)
@@ -262,7 +263,9 @@ class AddProfileBindView(val isRewrite : Boolean, val resources : Resources, val
             } else {
                 tab.addProfile(profile)
             }
+            Utils.storageData.Profiles += profile
             dialog.dismiss()
+            Utils.save()
         }
     }
 }

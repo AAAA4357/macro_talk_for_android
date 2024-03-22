@@ -3,12 +3,14 @@ package com.macro.macrotalkforandroid.ui.conversationlist
 import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -75,12 +77,13 @@ class ConversationListFragment : Fragment() {
         addConversation.setOnClickListener(AddConversationClick())
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && data != null) {
-            val path = data.data!!.path!!.replace("/raw/", "")
-            val bitmap = BitmapFactory.decodeFile(path)
-            addConversationView.uploadImage(bitmap, path)
+            val file = Utils.uriToFileQ(requireContext(), data.data!!)!!
+            val bitmap = BitmapFactory.decodeFile(file.absolutePath)
+            addConversationView.uploadImage(bitmap, file.absolutePath)
         }
     }
 

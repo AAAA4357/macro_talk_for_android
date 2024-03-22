@@ -12,6 +12,11 @@
         android:title="@string/title_conversation_list" />
 
     <item
+        android:id="@+id/navigation_ai_student"
+        android:icon="@drawable/ic_ai_student"
+        android:title="@string/title_ai_student" />
+
+    <item
         android:id="@+id/navigation_settings"
         android:icon="@drawable/ic_settings"
         android:title="@string/title_settings" />

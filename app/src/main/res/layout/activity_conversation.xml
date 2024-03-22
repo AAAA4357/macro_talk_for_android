@@ -85,6 +85,7 @@
                 android:layout_weight="1"/>
 
             <ImageButton
+                android:visibility="gone"
                 android:id="@+id/conversation_export"
                 android:layout_width="65dp"
                 android:layout_height="65dp"

@@ -9,10 +9,10 @@ android {
 
     defaultConfig {
         applicationId = "com.macro.macrotalkforandroid"
-        minSdk = 30
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = 24
+        targetSdk = 33
+        versionCode = 3
+        versionName = "1.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -61,4 +61,13 @@ dependencies {
     implementation("com.github.getActivity:XXPermissions:18.6")
     implementation("io.github.meetsl:SCardView:1.0")
     implementation("de.hdodenhof:circleimageview:3.1.0")
+    implementation("ch.qos.logback:logback-core:1.2.3")
+    implementation("ch.qos.logback:logback-classic:1.2.3")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    implementation("com.google.guava:guava:27.0.1-android")
+    implementation("com.alibaba:dashscope-sdk-java:2.9.0"){
+        this.isTransitive = false
+        this.exclude("org.slf4j","slf4j-simple")
+    }
 }

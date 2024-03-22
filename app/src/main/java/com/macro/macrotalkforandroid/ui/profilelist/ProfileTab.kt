@@ -9,6 +9,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.text.TextPaint
 import android.util.TypedValue
@@ -18,7 +19,9 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.ColorRes
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -109,12 +112,13 @@ class ProfileTab(val isPrefab : Boolean) : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && data != null) {
-            val path = data.data!!.path!!.replace("/raw/", "")
-            val bitmap = BitmapFactory.decodeFile(path)
-            addProfileClick.addProfileView.addAvator(bitmap, path)
+            val file = Utils.uriToFileQ(requireContext(), data.data!!)!!
+            val bitmap = BitmapFactory.decodeFile(file.absolutePath)
+            addProfileClick.addProfileView.addAvator(bitmap, file.absolutePath)
         }
     }
 

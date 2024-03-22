@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
+import android.os.Build
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
@@ -19,6 +20,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -102,6 +104,7 @@ class AddConversationBindView(val resources : Resources, val context : Context, 
 
     fun uploadImage(bitmap : Bitmap, path : String) {
         cover.setImageBitmap(bitmap)
+        cover.setColorFilter(Color.parseColor("#00000000"))
         conversationCover = path
     }
 
@@ -138,6 +141,7 @@ class AddConversationBindView(val resources : Resources, val context : Context, 
         override fun onClick(v: View?) {
             conversationCover = null
             cover.setImageDrawable(resources.getDrawable(R.drawable.ic_addimage))
+            cover.setColorFilter(Color.parseColor("#C8C8C8"))
         }
     }
 
@@ -167,6 +171,7 @@ class AddConversationBindView(val resources : Resources, val context : Context, 
     }
 
     inner class OnConfirmClick(val dialog : CustomDialog) : OnClickListener {
+        @RequiresApi(Build.VERSION_CODES.O)
         override fun onClick(v: View?) {
             val title = view.findViewById<EditText>(R.id.add_conversation_title)
             val profiles = profileAdapter.selectedProfiles
@@ -185,13 +190,7 @@ class AddConversationBindView(val resources : Resources, val context : Context, 
             var image : Image? = null
             if (conversationCover != null) {
                 val file = File(conversationCover!!)
-                val newfile = File(Utils.appDataPath + "/" + Utils.toMD5(file.name))
-                if (newfile.exists()) {
-                    Files.copy(file.toPath(), newfile.toPath(), StandardCopyOption.REPLACE_EXISTING)
-                } else {
-                    Files.copy(file.toPath(), newfile.toPath())
-                }
-                image = Image(title.text.toString(), newfile.absolutePath, true)
+                image = Image(title.text.toString(), file.absolutePath, true)
             }
 
             if (image == null) {
@@ -256,6 +255,7 @@ class AddConversationBindView(val resources : Resources, val context : Context, 
             )
             fragment.addConversation(conversation)
             dialog.dismiss()
+            Utils.save()
         }
     }
 }

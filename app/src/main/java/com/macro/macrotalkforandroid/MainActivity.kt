@@ -1,12 +1,15 @@
 package com.macro.macrotalkforandroid
 
 import android.os.Bundle
+import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.hjq.permissions.Permission
+import com.hjq.permissions.XXPermissions
 import com.macro.macrotalkforandroid.databinding.ActivityMainBinding
 import com.macro.macrotalkforandroid.R
 
@@ -26,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_profile_list, R.id.navigation_conversation_list, R.id.navigation_settings
+                R.id.navigation_profile_list, R.id.navigation_conversation_list, R.id.navigation_ai_student, R.id.navigation_settings
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

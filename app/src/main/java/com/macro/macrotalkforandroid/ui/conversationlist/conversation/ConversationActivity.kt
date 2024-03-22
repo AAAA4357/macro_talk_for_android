@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.AnimatedVectorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.Gravity
@@ -19,6 +20,7 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -161,17 +163,12 @@ class ConversationActivity : AppCompatActivity() {
         export.setOnClickListener(OnExportClick())
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
-            val file = File(data.data!!.path!!.replace("/raw/", ""))
-            val newfile = File(Utils.appDataPath + "/" + Utils.toMD5(file.name))
-            if (newfile.exists()) {
-                Files.copy(file.toPath(), newfile.toPath(), StandardCopyOption.REPLACE_EXISTING)
-            } else {
-                Files.copy(file.toPath(), newfile.toPath())
-            }
-            val image = Image(Utils.toMD5(file.name), newfile.absolutePath, true)
+            val file = Utils.uriToFileQ(this@ConversationActivity, data.data!!)!!
+            val image = Image(Utils.toMD5(file.name), file.absolutePath, true)
 
             val personal = findViewById<ViewPager2>(R.id.conversation_personal)
             val profile = findViewById<ViewPager2>(R.id.conversation_profile)
@@ -247,8 +244,9 @@ class ConversationActivity : AppCompatActivity() {
             nameOverwrite = null
 
         } else if (requestCode == 2 && resultCode == Activity.RESULT_OK && data != null) {
-            conversationOverwriteBindView.loadAvator(BitmapFactory.decodeFile(data.data!!.path!!.replace("/raw/", "")))
-            avatorOverwrite = data.data!!.path!!.replace("/raw/", "")
+            val file = Utils.uriToFileQ(this@ConversationActivity, data.data!!)!!
+            conversationOverwriteBindView.loadAvator(BitmapFactory.decodeFile(file.absolutePath))
+            avatorOverwrite = file.absolutePath
         }
     }
 
@@ -278,6 +276,7 @@ class ConversationActivity : AppCompatActivity() {
     }
 
     inner class OnSendClick : OnClickListener {
+        @RequiresApi(Build.VERSION_CODES.O)
         override fun onClick(v: View?) {
             val sender = findViewById<EditText>(R.id.sender)
 

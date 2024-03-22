@@ -225,16 +225,19 @@
                             android:gravity="center_horizontal" />
                 
                 </ScrollView>
+
                 <Button
-                        android:layout_weight="0"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:layout_gravity="center"
-                        android:textAppearance="@style/default_text"
-                        android:text="@string/start_conversation"
-                        android:textSize="24sp"
+                    android:id="@+id/startConversationButton"
+                    android:layout_weight="0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_gravity="center"
+                    android:textAppearance="@style/default_text"
+                    android:text="@string/start_conversation"
+                    android:textSize="24sp"
                 />
+
             </LinearLayout>
             
             
