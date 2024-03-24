@@ -10,11 +10,15 @@ import com.macro.macrotalkforandroid.Dialogue
 import com.macro.macrotalkforandroid.Utils
 import java.util.Collections
 
+// 拖拽帮助类，用于处理对话列表中的拖拽事件
 class DialogueItemTouchHelper(
     activity: ConversationActivity,
     dialogues: List<Dialogue>,
+    // 对话列表
     recycleViewAdapter: DialogueListAdapter,
-    val conversation : Conversation
+    // 对话列表适配器
+    val conversation: Conversation
+    // 对话对象
 ) : ItemTouchHelper.Callback() {
     private val dialogues: List<Dialogue>
     private val recycleViewAdapter: DialogueListAdapter
@@ -26,6 +30,7 @@ class DialogueItemTouchHelper(
         this.activity = activity
     }
 
+    // 获取拖拽和滑动的标志
     override fun getMovementFlags(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder
@@ -36,6 +41,7 @@ class DialogueItemTouchHelper(
         return makeMovementFlags(dragFlags, swipeFlags)
     }
 
+    // 处理拖拽事件
     override fun onMove(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder,
@@ -63,8 +69,10 @@ class DialogueItemTouchHelper(
         return true
     }
 
+    // 处理滑动事件
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
 
+    // 启用长按拖拽
     override fun isLongPressDragEnabled(): Boolean {
         return true
     }

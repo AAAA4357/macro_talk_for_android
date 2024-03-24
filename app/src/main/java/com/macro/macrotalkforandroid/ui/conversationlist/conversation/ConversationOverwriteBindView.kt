@@ -18,8 +18,10 @@ import com.kongzue.dialogx.dialogs.BottomDialog
 import com.kongzue.dialogx.interfaces.OnBindView
 import com.macro.macrotalkforandroid.R
 
-class ConversationOverwriteBindView(val context : Context, val resources : Resources, val activity: ConversationActivity)
+// 对话覆盖绑定视图，用于展示对话覆盖界面
+class ConversationOverwriteBindView(val context: Context, val resources: Resources, val activity: ConversationActivity)
     : OnBindView<BottomDialog>(R.layout.conversation_overwrite) {
+
     lateinit var view: View
 
     override fun onBind(dialog: BottomDialog?, v: View?) {
@@ -30,6 +32,7 @@ class ConversationOverwriteBindView(val context : Context, val resources : Resou
         reset.setOnClickListener(OnAvatorResetClick())
     }
 
+    // 加载头像
     fun loadAvator(bitmap: Bitmap?) {
         val avator = view.findViewById<ImageButton>(R.id.overwrite_avator)
         if (bitmap == null) {
@@ -39,7 +42,8 @@ class ConversationOverwriteBindView(val context : Context, val resources : Resou
         }
     }
 
-    fun loadName(content : String?) {
+    // 加载名称
+    fun loadName(content: String?) {
         val name = view.findViewById<EditText>(R.id.overwrite_name)
         if (content == null) {
             name.setText("")
@@ -48,35 +52,46 @@ class ConversationOverwriteBindView(val context : Context, val resources : Resou
         }
     }
 
+    // 点击头像事件
     inner class OnAvatorClick : OnClickListener {
         override fun onClick(v: View?) {
+            // 请求权限
             XXPermissions.with(context)
-            .permission(Permission.READ_MEDIA_IMAGES)
-            .request(object : OnPermissionCallback {
+                .permission(Permission.READ_MEDIA_IMAGES)
+                .request(object : OnPermissionCallback {
 
-                override fun onGranted(
-                    permissions: MutableList<String>,
-                    allGranted: Boolean
-                ) {
-                    val intent = Intent(Intent.ACTION_PICK,  null)
-                    intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
-                    activity.startActivityForResult(intent, 2)
-                }
-
-                override fun onDenied(
-                    permissions: MutableList<String>,
-                    doNotAskAgain: Boolean
-                ) {
-                    if (doNotAskAgain) {
-                        Toast.makeText(context, "请手动授予权限并重新上传图片", Toast.LENGTH_LONG).show()
-                    } else {
-                        Toast.makeText(context, "请授予权限", Toast.LENGTH_SHORT).show()
+                    override fun onGranted(
+                        permissions: MutableList<String>,
+                        allGranted: Boolean
+                    ) {
+                        // 打开系统相册
+                        val intent = Intent(Intent.ACTION_PICK, null)
+                        intent.setDataAndType(
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                            "image/*"
+                        )
+                        activity.startActivityForResult(intent, 2)
                     }
-                }
-            })
+
+                    override fun onDenied(
+                        permissions: MutableList<String>,
+                        doNotAskAgain: Boolean
+                    ) {
+                        if (doNotAskAgain) {
+                            Toast.makeText(
+                                context,
+                                "请手动授予权限并重新上传图片",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } else {
+                            Toast.makeText(context, "请授予权限", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                })
         }
     }
 
+    // 点击重置头像事件
     inner class OnAvatorResetClick : OnClickListener {
         override fun onClick(v: View?) {
             val avator = view.findViewById<ImageButton>(R.id.overwrite_avator)
