@@ -4,22 +4,24 @@ import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
 import android.os.Build
-import android.os.FileUtils
-import android.webkit.MimeTypeMap
-import androidx.annotation.RequiresApi
-import com.macro.macrotalkforandroid.MainApplication.Companion.mainContext
+import android.os.ParcelFileDescriptor
+import android.system.Os
+import android.widget.Toast
+import com.github.houbb.heaven.util.io.FileUtil.copyFile
 import com.google.gson.Gson
+import com.macro.macrotalkforandroid.MainApplication.Companion.mainContext
 import java.io.File
+import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.math.BigInteger
+import java.nio.file.Files
 import java.security.MessageDigest
-import kotlin.random.Random
+import kotlin.io.path.Path
+
 
 class Utils {
     companion object {
         var appDataPath = mainContext.getExternalFilesDir(null).toString()
-
-        var allowInternet = false
 
         var prefabData : PrefabData
             init {
@@ -70,25 +72,21 @@ class Utils {
             storageData = data
         }
 
-        @RequiresApi(Build.VERSION_CODES.Q)
-        fun uriToFileQ(context: Context, uri: Uri): File? =
-            if (uri.scheme == ContentResolver.SCHEME_FILE)
-                File(requireNotNull(uri.path))
-            else if (uri.scheme == ContentResolver.SCHEME_CONTENT) {
-                //把文件保存到沙盒
-                val contentResolver = context.contentResolver
-                val displayName = toMD5(uri.path!!)
-                val ios = contentResolver.openInputStream(uri)
-                if (ios != null) {
-                    File("${appDataPath}/$displayName")
-                        .apply {
-                            val fos = FileOutputStream(this)
-                            FileUtils.copy(ios, fos)
-                            fos.close()
-                            ios.close()
-                        }
-                } else null
-            } else null
+        fun uriToFile(context: Context, uri: Uri): File? {
+            var path = uri.path!!
+            if (path.contains("%2F")) path = path.replace("%2F", "/")
+            return when (uri.scheme) {
+                ContentResolver.SCHEME_FILE -> {
+                    File(path)
+                }
+                ContentResolver.SCHEME_CONTENT -> {
+                    var path1 = PathUtils.getPath(context, uri)
+                    if (path1.contains("%2F")) path1 = path1.replace("%2F", "/")
+                    File(path1!!)
+                }
+                else -> null
+            }
+        }
     }
 }
 

@@ -18,6 +18,11 @@ android {
 
         renderscriptTargetApi = 21
         renderscriptSupportModeEnabled = true
+
+        ndk {
+            // 根据需要添加必要的ABI
+            abiFilters += listOf("armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64")
+        }
     }
 
     buildTypes {
@@ -61,13 +66,5 @@ dependencies {
     implementation("com.github.getActivity:XXPermissions:18.6")
     implementation("io.github.meetsl:SCardView:1.0")
     implementation("de.hdodenhof:circleimageview:3.1.0")
-    implementation("ch.qos.logback:logback-core:1.2.3")
-    implementation("ch.qos.logback:logback-classic:1.2.3")
-    implementation("com.squareup.okhttp3:okhttp:4.11.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
-    implementation("com.google.guava:guava:27.0.1-android")
-    implementation("com.alibaba:dashscope-sdk-java:2.9.0"){
-        this.isTransitive = false
-        this.exclude("org.slf4j","slf4j-simple")
-    }
+    implementation("com.iqiyi.xcrash:xcrash-android-lib:3.0.0")
 }

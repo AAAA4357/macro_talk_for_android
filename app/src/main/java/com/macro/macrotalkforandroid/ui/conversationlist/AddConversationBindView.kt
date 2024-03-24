@@ -24,6 +24,7 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.houbb.heaven.util.io.FileUtil
 import com.macro.macrotalkforandroid.Conversation
 import com.macro.macrotalkforandroid.Image
 import com.macro.macrotalkforandroid.ProfileSelector
@@ -171,7 +172,6 @@ class AddConversationBindView(val resources : Resources, val context : Context, 
     }
 
     inner class OnConfirmClick(val dialog : CustomDialog) : OnClickListener {
-        @RequiresApi(Build.VERSION_CODES.O)
         override fun onClick(v: View?) {
             val title = view.findViewById<EditText>(R.id.add_conversation_title)
             val profiles = profileAdapter.selectedProfiles
@@ -190,7 +190,9 @@ class AddConversationBindView(val resources : Resources, val context : Context, 
             var image : Image? = null
             if (conversationCover != null) {
                 val file = File(conversationCover!!)
-                image = Image(title.text.toString(), file.absolutePath, true)
+                val newfile = File(Utils.appDataPath + "/" + Utils.toMD5(file.name))
+                FileUtil.copyFile(file.absolutePath, newfile.absolutePath)
+                image = Image(title.text.toString(), newfile.absolutePath, true)
             }
 
             if (image == null) {

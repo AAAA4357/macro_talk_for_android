@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import com.github.houbb.heaven.util.io.FileUtil.copyFile
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
@@ -163,11 +164,11 @@ class ConversationActivity : AppCompatActivity() {
         export.setOnClickListener(OnExportClick())
     }
 
-    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
-            val file = Utils.uriToFileQ(this@ConversationActivity, data.data!!)!!
+            val file = Utils.uriToFile(this@ConversationActivity, data.data!!)!!
+            return
             val image = Image(Utils.toMD5(file.name), file.absolutePath, true)
 
             val personal = findViewById<ViewPager2>(R.id.conversation_personal)
@@ -183,11 +184,7 @@ class ConversationActivity : AppCompatActivity() {
             } else {
                 val file = File(avatorOverwrite!!)
                 val newfile = File(Utils.appDataPath + "/" + Utils.toMD5(file.name))
-                if (newfile.exists()) {
-                    Files.copy(file.toPath(), newfile.toPath(), StandardCopyOption.REPLACE_EXISTING)
-                } else {
-                    Files.copy(file.toPath(), newfile.toPath())
-                }
+                copyFile(file.absolutePath, newfile.absolutePath)
                 Image(Utils.toMD5(file.name), newfile.absolutePath, true)
             }
 
@@ -244,7 +241,7 @@ class ConversationActivity : AppCompatActivity() {
             nameOverwrite = null
 
         } else if (requestCode == 2 && resultCode == Activity.RESULT_OK && data != null) {
-            val file = Utils.uriToFileQ(this@ConversationActivity, data.data!!)!!
+            val file = Utils.uriToFile(this@ConversationActivity, data.data!!)!!
             conversationOverwriteBindView.loadAvator(BitmapFactory.decodeFile(file.absolutePath))
             avatorOverwrite = file.absolutePath
         }
@@ -276,7 +273,6 @@ class ConversationActivity : AppCompatActivity() {
     }
 
     inner class OnSendClick : OnClickListener {
-        @RequiresApi(Build.VERSION_CODES.O)
         override fun onClick(v: View?) {
             val sender = findViewById<EditText>(R.id.sender)
 
@@ -304,11 +300,7 @@ class ConversationActivity : AppCompatActivity() {
             } else {
                 val file = File(avatorOverwrite!!)
                 val newfile = File(Utils.appDataPath + "/" + Utils.toMD5(file.name))
-                if (newfile.exists()) {
-                    Files.copy(file.toPath(), newfile.toPath(), StandardCopyOption.REPLACE_EXISTING)
-                } else {
-                    Files.copy(file.toPath(), newfile.toPath())
-                }
+                copyFile(file.absolutePath, newfile.absolutePath)
                 Image(Utils.toMD5(file.name), newfile.absolutePath, true)
             }
 

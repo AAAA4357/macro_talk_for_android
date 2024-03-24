@@ -17,6 +17,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import com.github.houbb.heaven.util.io.FileUtil
 import com.macro.macrotalkforandroid.Birthday
 import com.macro.macrotalkforandroid.Image
 import com.macro.macrotalkforandroid.Profile
@@ -208,7 +209,6 @@ class AddProfileBindView(val isRewrite : Boolean, val resources : Resources, val
     }
 
     inner class OnConfirmClick(val dialog : CustomDialog, val index : Int) : View.OnClickListener {
-        @RequiresApi(Build.VERSION_CODES.O)
         override fun onClick(v: View?) {
             val name = view.findViewById<EditText>(R.id.add_profile_name)
             val layout = view.findViewById<GridLayout>(R.id.add_profile_avators)
@@ -233,7 +233,9 @@ class AddProfileBindView(val isRewrite : Boolean, val resources : Resources, val
             val firstname = view.findViewById<EditText>(R.id.add_profile_firstname)
             for (index : Int in 0..avatorList.size - 1) {
                 val file = File(avatorList[index])
-                val image = Image(name.text.toString() + "[" + index + "]", file.absolutePath, true)
+                val newfile = File(Utils.appDataPath + "/" + Utils.toMD5(file.name))
+                FileUtil.copyFile(file.absolutePath, newfile.absolutePath)
+                val image = Image(name.text.toString() + "[" + index + "]", newfile.absolutePath, true)
                 imageList += image
             }
             val age = view.findViewById<EditText>(R.id.add_profile_age)

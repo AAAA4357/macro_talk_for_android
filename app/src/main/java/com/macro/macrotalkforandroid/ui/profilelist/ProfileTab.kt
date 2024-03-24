@@ -25,6 +25,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.houbb.heaven.util.io.FileUtil
 import com.macro.macrotalkforandroid.Profile
 import com.github.houbb.pinyin.constant.enums.PinyinStyleEnum
 import com.github.houbb.pinyin.util.PinyinHelper
@@ -34,6 +35,7 @@ import com.kongzue.dialogx.dialogs.PopMenu
 import com.macro.macrotalkforandroid.R
 import com.macro.macrotalkforandroid.Utils
 import com.macro.macrotalkforandroid.ui.profilelist.profile.ProfileActivity
+import java.io.File
 
 class ProfileTab(val isPrefab : Boolean) : Fragment() {
     lateinit var profileList : List<Profile>
@@ -112,13 +114,14 @@ class ProfileTab(val isPrefab : Boolean) : Fragment() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && data != null) {
-            val file = Utils.uriToFileQ(requireContext(), data.data!!)!!
-            val bitmap = BitmapFactory.decodeFile(file.absolutePath)
-            addProfileClick.addProfileView.addAvator(bitmap, file.absolutePath)
+            val file = Utils.uriToFile(requireContext(), data.data!!)!!
+            val newfile = File(Utils.appDataPath + "/" + Utils.toMD5(file.name))
+            FileUtil.copyFile(file.absolutePath, newfile.absolutePath)
+            val bitmap = BitmapFactory.decodeFile(newfile.absolutePath)
+            addProfileClick.addProfileView.addAvator(bitmap, newfile.absolutePath)
         }
     }
 

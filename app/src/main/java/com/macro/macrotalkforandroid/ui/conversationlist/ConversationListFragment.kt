@@ -14,6 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.houbb.heaven.util.io.FileUtil
 import com.macro.macrotalkforandroid.Conversation
 import com.macro.macrotalkforandroid.R
 import com.macro.macrotalkforandroid.databinding.FragmentConversationListBinding
@@ -25,6 +26,7 @@ import com.macro.macrotalkforandroid.Profile
 import com.macro.macrotalkforandroid.Utils
 import com.macro.macrotalkforandroid.ui.profilelist.AddProfileBindView
 import com.macro.macrotalkforandroid.ui.profilelist.ProfileListAdapter
+import java.io.File
 
 class ConversationListFragment : Fragment() {
 
@@ -77,13 +79,14 @@ class ConversationListFragment : Fragment() {
         addConversation.setOnClickListener(AddConversationClick())
     }
 
-    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && data != null) {
-            val file = Utils.uriToFileQ(requireContext(), data.data!!)!!
-            val bitmap = BitmapFactory.decodeFile(file.absolutePath)
-            addConversationView.uploadImage(bitmap, file.absolutePath)
+            val file = Utils.uriToFile(requireContext(), data.data!!)!!
+            val newfile = File(Utils.appDataPath + "/" + Utils.toMD5(file.name))
+            FileUtil.copyFile(file.absolutePath, newfile.absolutePath)
+            val bitmap = BitmapFactory.decodeFile(newfile.absolutePath)
+            addConversationView.uploadImage(bitmap, newfile.absolutePath)
         }
     }
 
