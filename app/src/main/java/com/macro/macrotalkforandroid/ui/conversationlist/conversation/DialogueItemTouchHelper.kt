@@ -58,7 +58,7 @@ class DialogueItemTouchHelper(
         val targetDialogue = conversation.Dialogues[toPosition]
         conversation.Dialogues.removeAt(fromPosition)
         val targetIndex = conversation.Dialogues.indexOf(targetDialogue)
-        conversation.Dialogues.add(targetIndex, dialogue)
+        conversation.Dialogues.add(if (fromPosition > toPosition) targetIndex else targetIndex + 1, dialogue)
 
         return true
     }

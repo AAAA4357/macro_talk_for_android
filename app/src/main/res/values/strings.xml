@@ -2,8 +2,8 @@
     <string name="app_name">Macro Talk for Android</string>
     <string name="title_profile_list">档案列表</string>
     <string name="title_conversation_list">对话列表</string>
-    <string name="title_ai_student">AI学生对话</string>
-    <string name="title_settings">设置</string>
+    <string name="title_settings">设置页面</string>
+    <string name="title_online">在线平台</string>
     <string name="prefab_profile_tab">预制档案</string>
     <string name="custom_profile_tab">自定义档案</string>
     <string name="custom_profile_empty">暂无档案\n可点击右下角按钮创建</string>

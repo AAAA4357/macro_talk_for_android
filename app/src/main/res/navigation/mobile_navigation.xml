@@ -18,10 +18,10 @@
         tools:layout="@layout/fragment_conversation_list" />
 
     <fragment
-        android:id="@+id/navigation_ai_student"
-        android:name="com.macro.macrotalkforandroid.ui.ai.AIStudentFragment"
-        android:label="@string/title_ai_student"
-        tools:layout="@layout/fragment_ai_student" />
+        android:id="@+id/navigation_online"
+        android:name="com.macro.macrotalkforandroid.ui.online.OnlineFragment"
+        android:label="@string/title_online"
+        tools:layout="@layout/fragment_online" />
 
     <fragment
         android:id="@+id/navigation_settings"

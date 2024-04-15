@@ -118,10 +118,8 @@ class ProfileTab(val isPrefab : Boolean) : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && data != null) {
             val file = Utils.uriToFile(requireContext(), data.data!!)!!
-            val newfile = File(Utils.appDataPath + "/" + Utils.toMD5(file.name))
-            FileUtil.copyFile(file.absolutePath, newfile.absolutePath)
-            val bitmap = BitmapFactory.decodeFile(newfile.absolutePath)
-            addProfileClick.addProfileView.addAvator(bitmap, newfile.absolutePath)
+            val bitmap = BitmapFactory.decodeFile(file.absolutePath)
+            addProfileClick.addProfileView.addAvator(bitmap, file.absolutePath)
         }
     }
 

@@ -5,9 +5,10 @@ import android.content.Context
 import android.widget.Toast
 import com.kongzue.dialogx.DialogX
 import com.kongzue.dialogx.style.MaterialStyle
+import com.xuexiang.xui.XUI
+import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import org.xutils.BuildConfig
 import org.xutils.x
-import xcrash.XCrash
 
 
 
@@ -25,13 +26,14 @@ class MainApplication : Application() {
         x.Ext.init(this)
         x.Ext.setDebug(BuildConfig.DEBUG)
 
+        XUI.init(this)
+        XUI.initFontStyle("fonts/font_main.ttf");
+
         Utils.load()
     }
 
     override fun attachBaseContext(base: Context) {
-        super.attachBaseContext(base)
-
-        XCrash.init(this)
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(base))
     }
 
     companion object {

@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.ParcelFileDescriptor
 import android.system.Os
 import android.widget.Toast
+import com.github.houbb.heaven.util.io.FileUtil
 import com.github.houbb.heaven.util.io.FileUtil.copyFile
 import com.google.gson.Gson
 import com.macro.macrotalkforandroid.MainApplication.Companion.mainContext
@@ -77,12 +78,18 @@ class Utils {
             if (path.contains("%2F")) path = path.replace("%2F", "/")
             return when (uri.scheme) {
                 ContentResolver.SCHEME_FILE -> {
-                    File(path)
+                    val file = File(path)
+                    val newfile = File(appDataPath + "/" + toMD5(file.name))
+                    copyFile(file.absolutePath, newfile.absolutePath)
+                    newfile
                 }
                 ContentResolver.SCHEME_CONTENT -> {
                     var path1 = PathUtils.getPath(context, uri)
                     if (path1.contains("%2F")) path1 = path1.replace("%2F", "/")
-                    File(path1!!)
+                    val file = File(path1!!)
+                    val newfile = File(appDataPath + "/" + toMD5(file.name))
+                    copyFile(file.absolutePath, newfile.absolutePath)
+                    newfile
                 }
                 else -> null
             }

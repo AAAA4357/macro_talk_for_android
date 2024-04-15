@@ -9,20 +9,15 @@ android {
 
     defaultConfig {
         applicationId = "com.macro.macrotalkforandroid"
-        minSdk = 24
-        targetSdk = 33
-        versionCode = 3
-        versionName = "1.2"
+        minSdk = 30
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         renderscriptTargetApi = 21
         renderscriptSupportModeEnabled = true
-
-        ndk {
-            // 根据需要添加必要的ABI
-            abiFilters += listOf("armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64")
-        }
     }
 
     buildTypes {
@@ -66,5 +61,5 @@ dependencies {
     implementation("com.github.getActivity:XXPermissions:18.6")
     implementation("io.github.meetsl:SCardView:1.0")
     implementation("de.hdodenhof:circleimageview:3.1.0")
-    implementation("com.iqiyi.xcrash:xcrash-android-lib:3.0.0")
+    implementation("com.github.xuexiangjys:XUI:1.2.1")
 }

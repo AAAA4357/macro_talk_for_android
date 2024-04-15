@@ -1,18 +1,12 @@
 package com.macro.macrotalkforandroid
 
-import android.content.Intent
 import android.os.Bundle
-import android.provider.MediaStore
-import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.hjq.permissions.OnPermissionCallback
-import com.hjq.permissions.Permission
-import com.hjq.permissions.XXPermissions
 import com.macro.macrotalkforandroid.databinding.ActivityMainBinding
 import com.macro.macrotalkforandroid.R
 
@@ -32,30 +26,10 @@ class MainActivity : AppCompatActivity() {
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_profile_list, R.id.navigation_conversation_list, R.id.navigation_ai_student, R.id.navigation_settings
+                R.id.navigation_profile_list, R.id.navigation_conversation_list, R.id.navigation_online, R.id.navigation_settings
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        /*XXPermissions.with(this@MainActivity)
-            .permission(Permission.MANAGE_EXTERNAL_STORAGE)
-            .request(object : OnPermissionCallback {
-                override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
-
-                }
-
-                override fun onDenied(
-                    permissions: MutableList<String>,
-                    doNotAskAgain: Boolean
-                ) {
-                    if (doNotAskAgain) {
-                        Toast.makeText(this@MainActivity, "请手动授予权限防止软件崩溃", Toast.LENGTH_LONG).show()
-                    } else {
-                        Toast.makeText(this@MainActivity, "请授予权限防止软件崩溃", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            })*/
-
     }
 }
