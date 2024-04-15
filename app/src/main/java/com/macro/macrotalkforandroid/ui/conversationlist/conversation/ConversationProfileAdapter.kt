@@ -10,8 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.macro.macrotalkforandroid.Image
 import com.macro.macrotalkforandroid.R
 
-class ConversationProfileAdapter(val images : List<Image>)
-    : RecyclerView.Adapter<ConversationProfileAdapter.ConversationProfileViewHolder>() {
+// 对话档案适配器，用于显示对话档案的图片
+class ConversationProfileAdapter(val images: List<Image>) :
+    RecyclerView.Adapter<ConversationProfileAdapter.ConversationProfileViewHolder>() {
 
     lateinit var context: Context
 
@@ -19,6 +20,7 @@ class ConversationProfileAdapter(val images : List<Image>)
         parent: ViewGroup,
         viewType: Int
     ): ConversationProfileViewHolder {
+        // 加载布局文件
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.conversation_viewpager_item, parent, false)
         return ConversationProfileViewHolder(view)
@@ -29,6 +31,7 @@ class ConversationProfileAdapter(val images : List<Image>)
     }
 
     override fun onBindViewHolder(holder: ConversationProfileViewHolder, position: Int) {
+        // 设置图片
         holder.itemImage.setImageBitmap(
             if (!images[position].isNotPrefab) {
                 BitmapFactory.decodeStream(context.assets.open(images[position].ImageName + ".jpg"))
@@ -42,8 +45,10 @@ class ConversationProfileAdapter(val images : List<Image>)
         val itemImage: ImageView
 
         init {
+            // 初始化控件
             itemImage = itemView.findViewById(R.id.item_image)
 
+            // 设置点击事件
             itemView.setOnClickListener { v ->
                 if (onItemClickListener != null) {
                     onItemClickListener!!.OnItemClick(v, layoutPosition)
@@ -52,10 +57,11 @@ class ConversationProfileAdapter(val images : List<Image>)
         }
     }
 
+    // 点击事件监听器
+    private var onItemClickListener: ConversationActivity.OnItemClickListener? = null
 
-    private var onItemClickListener : ConversationActivity.OnItemClickListener? = null
-
-    fun setOnItemClickListener(onItemClickListener : ConversationActivity.OnItemClickListener?) {
+    // 设置点击事件监听器
+    fun setOnItemClickListener(onItemClickListener: ConversationActivity.OnItemClickListener?) {
         this.onItemClickListener = onItemClickListener
     }
 }

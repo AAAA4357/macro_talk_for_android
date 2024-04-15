@@ -8,7 +8,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.macro.macrotalkforandroid.databinding.ActivityMainBinding
-import com.macro.macrotalkforandroid.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,19 +16,27 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // 使用 ViewBinding 设置布局
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 获取底部导航视图
         val navView: BottomNavigationView = binding.navView
 
+        // 获取导航控制器
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
+        // 设置顶部导航栏的配置，包括导航目的地的 ID
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_profile_list, R.id.navigation_conversation_list, R.id.navigation_online, R.id.navigation_settings
             )
         )
+
+        // 将顶部导航栏与导航控制器关联
         setupActionBarWithNavController(navController, appBarConfiguration)
+
+        // 将底部导航视图与导航控制器关联
         navView.setupWithNavController(navController)
     }
 }

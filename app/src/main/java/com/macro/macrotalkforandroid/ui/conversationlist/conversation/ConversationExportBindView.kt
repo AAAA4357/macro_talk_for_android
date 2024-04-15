@@ -26,10 +26,11 @@ import com.macro.macrotalkforandroid.R
 import com.macro.macrotalkforandroid.Utils
 
 
-class ConversationExportBindView(val context : Context, val resources : Resources, val dialogues : List<Dialogue>, val adapter: DialogueListAdapter)
+class ConversationExportBindView(val context: Context, val resources: Resources, val dialogues: List<Dialogue>, val adapter: DialogueListAdapter)
     : OnBindView<CustomDialog>(R.layout.fragment_export) {
     lateinit var view: View
 
+    // 存储预览图像的位图列表
     var bitmaps = listOf<Bitmap>()
 
     override fun onBind(dialog: CustomDialog?, v: View?) {
@@ -42,6 +43,7 @@ class ConversationExportBindView(val context : Context, val resources : Resource
         confirm.setOnClickListener(OnConfirmClick(dialog))
     }
 
+    // 剪切模式变化监听器
     inner class OnCutModeChanged : OnCheckedChangeListener {
         override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
             when (checkedId) {
@@ -49,6 +51,7 @@ class ConversationExportBindView(val context : Context, val resources : Resource
 
                 }
                 5 -> {
+                    // 显示对话预览图像列表
                     val list = view.findViewById<RecyclerView>(R.id.dialogue_preview)
                     val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                     val adapter = BitmapListAdapter(context, bitmaps)
@@ -64,33 +67,40 @@ class ConversationExportBindView(val context : Context, val resources : Resource
         }
     }
 
-    inner class OnCancelClick(val dialog : CustomDialog) : OnClickListener {
+    // 取消按钮点击监听器
+    inner class OnCancelClick(val dialog: CustomDialog) : OnClickListener {
         override fun onClick(v: View?) {
             dialog.dismiss()
         }
     }
 
-    inner class OnConfirmClick(val dialog : CustomDialog) : OnClickListener {
+    // 确定按钮点击监听器
+    inner class OnConfirmClick(val dialog: CustomDialog) : OnClickListener {
         override fun onClick(v: View?) {
             dialog.dismiss()
         }
     }
 
-    inner class BitmapListAdapter(val context: Context, val bitmaps : List<Bitmap>) : RecyclerView.Adapter<BitmapListAdapter.BitmapViewHolder>() {
+    // 对话预览图像列表适配器
+    inner class BitmapListAdapter(val context: Context, val bitmaps: List<Bitmap>) : RecyclerView.Adapter<BitmapListAdapter.BitmapViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BitmapViewHolder {
-            val view = LayoutInflater.from(context).inflate(R.layout.conversation_export_item, null, false)
+            // 创建ViewHolder
+            val view = LayoutInflater.from(context).inflate(R.layout.conversation_export_item, parent, false)
             return BitmapViewHolder(view)
         }
 
         override fun getItemCount(): Int {
+            // 返回位图列表的大小
             return bitmaps.size
         }
 
         override fun onBindViewHolder(holder: BitmapViewHolder, position: Int) {
+            // 绑定位图到ImageView
             val image = holder.view.findViewById<ImageView>(R.id.export_preview)
             image.setImageBitmap(bitmaps[position])
         }
 
-        inner class BitmapViewHolder(val view : View) : ViewHolder(view)
+        // 位图ViewHolder
+        inner class BitmapViewHolder(val view: View) : ViewHolder(view)
     }
 }
