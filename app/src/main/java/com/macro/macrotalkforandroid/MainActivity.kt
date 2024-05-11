@@ -47,9 +47,5 @@ class MainActivity : AppCompatActivity() {
 
         // 将底部导航视图与导航控制器关联
         navView.setupWithNavController(navController)
-
-        if (!Utils.SettingData.HintDisplyed) {
-            Utils.ShowHint(0)
-        }
     }
 }
