@@ -21,11 +21,8 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:layout_marginEnd="60dp"
         android:maxWidth="300dp"
-        android:orientation="horizontal"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="60dp">
+        android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/Dialogue_Student1_Avator"
@@ -33,17 +30,15 @@
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:src="@drawable/ic_nobody"
-            android:layout_marginLeft="5dp" />
+            android:src="@drawable/ic_nobody"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginLeft="5dp">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/Dialogue_Student1_Name"

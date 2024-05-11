@@ -14,7 +14,8 @@
     <item
         android:id="@+id/navigation_online"
         android:icon="@drawable/ic_online"
-        android:title="@string/title_online" />
+        android:title="@string/title_online"
+        android:enabled="false"/>
 
     <item
         android:id="@+id/navigation_settings"

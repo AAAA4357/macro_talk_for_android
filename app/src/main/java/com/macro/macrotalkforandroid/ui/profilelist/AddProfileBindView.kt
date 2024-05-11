@@ -28,6 +28,7 @@ import com.kongzue.dialogx.dialogs.PopMenu
 import com.kongzue.dialogx.dialogs.PopTip
 import com.kongzue.dialogx.interfaces.OnBindView
 import com.kongzue.dialogx.util.TextInfo
+import com.xuexiang.xui.widget.button.roundbutton.RoundButton
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
@@ -56,13 +57,13 @@ class AddProfileBindView(val isRewrite: Boolean, val resources: Resources, val c
         // 设置点击事件
         val imageUpload = v.findViewById<ImageButton>(R.id.add_profile_avators_add)
         imageUpload.setOnClickListener(onImageUploadClick(context, tab))
-        val birthdayselect = v.findViewById<TextView>(R.id.add_profile_birthday_select)
+        val birthdayselect = v.findViewById<RoundButton>(R.id.add_profile_birthday_select)
         birthdayselect.setOnClickListener(OnBirthdaySelectClick())
-        val birthdayclear = v.findViewById<TextView>(R.id.add_profile_birthday_clear)
+        val birthdayclear = v.findViewById<RoundButton>(R.id.add_profile_birthday_clear)
         birthdayclear.setOnClickListener(OnBirthdayClearClick())
-        val cancel = v.findViewById<TextView>(R.id.add_profile_cancel)
+        val cancel = v.findViewById<RoundButton>(R.id.add_profile_cancel)
         cancel.setOnClickListener(OnCancelClick(dialog!!))
-        val confirm = v.findViewById<TextView>(R.id.add_profile_confirm)
+        val confirm = v.findViewById<RoundButton>(R.id.add_profile_confirm)
         confirm.setOnClickListener(OnConfirmClick(dialog, index))
     }
 

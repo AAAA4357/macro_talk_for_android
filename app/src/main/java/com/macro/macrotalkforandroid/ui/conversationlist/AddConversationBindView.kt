@@ -37,6 +37,7 @@ import com.kongzue.dialogx.dialogs.CustomDialog
 import com.kongzue.dialogx.dialogs.PopTip
 import com.kongzue.dialogx.interfaces.OnBindView
 import com.kongzue.dialogx.util.TextInfo
+import com.xuexiang.xui.widget.button.roundbutton.RoundButton
 import java.io.File
 import java.io.FileOutputStream
 import java.nio.file.Files
@@ -70,12 +71,12 @@ class AddConversationBindView(val resources : Resources, val context : Context, 
         view = v!!
         cover = view.findViewById(R.id.conversation_cover)
         cover.setOnClickListener(OnCoverUploadClick())
-        val coverClear = view.findViewById<TextView>(R.id.add_conversation_cover_reset)
+        val coverClear = view.findViewById<RoundButton>(R.id.add_conversation_cover_reset)
         coverClear.setOnClickListener(OnCoverClearClick())
         profileAdapter = AddConversationProfileAdapter(context, Utils.prefabData.Profiles + Utils.storageData.Profiles)
         searchText = view.findViewById(R.id.add_conversation_search_content)
         searchText.addTextChangedListener(OnSearchTextChanged())
-        val searchClear = view.findViewById<TextView>(R.id.add_conversation_search_reset)
+        val searchClear = view.findViewById<RoundButton>(R.id.add_conversation_search_reset)
         searchClear.setOnClickListener(OnSearchTextClearClick())
         if (!isRewrite) {
             val list = view.findViewById<RecyclerView>(R.id.add_conversation_profiles)
@@ -92,9 +93,9 @@ class AddConversationBindView(val resources : Resources, val context : Context, 
         }
         val tags = view.findViewById<EditText>(R.id.add_conversation_tags)
         tags.hint = resources.getString(R.string.add_tags, Utils.SettingData.DefaultSplitChar)
-        val cancel = view.findViewById<TextView>(R.id.add_conversation_cancel)
+        val cancel = view.findViewById<RoundButton>(R.id.add_conversation_cancel)
         cancel.setOnClickListener(OnCancelClick(dialog!!))
-        val confirm = view.findViewById<TextView>(R.id.add_conversation_confirm)
+        val confirm = view.findViewById<RoundButton>(R.id.add_conversation_confirm)
         confirm.setOnClickListener(OnConfirmClick(dialog))
     }
 

@@ -2,22 +2,30 @@ package com.macro.macrotalkforandroid
 
 import android.content.ContentResolver
 import android.content.Context
+import android.content.pm.PackageManager
+import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.drawable.ColorDrawable
+import android.media.MediaScannerConnection
 import android.net.Uri
-import android.os.Build
-import android.os.ParcelFileDescriptor
-import android.system.Os
-import android.widget.Toast
-import com.github.houbb.heaven.util.io.FileUtil
+import android.os.Environment
+import android.util.LruCache
+import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import com.github.houbb.heaven.util.io.FileUtil.copyFile
 import com.google.gson.Gson
+import com.kongzue.dialogx.dialogs.CustomDialog
+import com.kongzue.dialogx.dialogs.GuideDialog
+import com.kongzue.dialogx.interfaces.DialogLifecycleCallback
 import com.macro.macrotalkforandroid.MainApplication.Companion.mainContext
 import java.io.File
-import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.io.IOException
 import java.math.BigInteger
-import java.nio.file.Files
 import java.security.MessageDigest
-import kotlin.io.path.Path
 
 
 class Utils {
@@ -43,7 +51,7 @@ class Utils {
 
         var SettingData : SettingData
             init {
-                SettingData = SettingData(",", "#FFFFF9D9", true, 5)
+                SettingData = SettingData(",", "#FFFFF9D9", true, 5, true)
             }
 
         fun dip2px(context: Context, dpValue: Float): Int {
@@ -71,6 +79,22 @@ class Utils {
             val gson = Gson()
             val data = gson.fromJson(loadFile.readText(), StorageData::class.java)
             storageData = data
+            loadSetting()
+        }
+
+        fun saveSetting() {
+            val saveFile = File("$appDataPath/Setting_Data.json")
+            val gson = Gson()
+            val jsonText = gson.toJson(SettingData, SettingData::class.java)
+            saveFile.writeText(jsonText)
+        }
+
+        fun loadSetting() {
+            val loadFile = File("$appDataPath/Setting_Data.json")
+            if (!loadFile.exists()) return
+            val gson = Gson()
+            val data = gson.fromJson(loadFile.readText(), SettingData::class.java)
+            SettingData = data
         }
 
         fun uriToFile(context: Context, uri: Uri): File? {
@@ -85,7 +109,7 @@ class Utils {
                 }
                 ContentResolver.SCHEME_CONTENT -> {
                     var path1 = PathUtils.getPath(context, uri)
-                    if (path1.contains("%2F")) path1 = path1.replace("%2F", "/")
+                    if (path1!!.contains("%2F")) path1 = path1.replace("%2F", "/")
                     val file = File(path1!!)
                     val newfile = File(appDataPath + "/" + toMD5(file.name))
                     copyFile(file.absolutePath, newfile.absolutePath)
@@ -94,14 +118,160 @@ class Utils {
                 else -> null
             }
         }
+
+        fun getVersionCode(mContext: Context): Int {
+            var versionCode = 0
+            try {
+                //获取软件版本号，对应AndroidManifest.xml下android:versionCode
+                versionCode =
+                    mContext.packageManager.getPackageInfo(mContext.packageName, 0).versionCode
+            } catch (e: PackageManager.NameNotFoundException) {
+                e.printStackTrace()
+            }
+            return versionCode
+        }
+
+        fun shotRecyclerView(view: RecyclerView): Bitmap? {
+            val adapter = view.adapter
+            var bigBitmap: Bitmap? = null
+            if (adapter != null) {
+                val size = adapter.itemCount
+                var height = 0
+                val paint = Paint()
+                var iHeight = 0
+                val maxMemory = (Runtime.getRuntime().maxMemory() / 1024).toInt()
+
+                // Use 1/8th of the available memory for this memory cache.
+                val cacheSize = maxMemory / 8
+                val bitmaCache: LruCache<String, Bitmap> = LruCache(cacheSize)
+                for (i in 0 until size) {
+                    val holder = adapter.createViewHolder(view, adapter.getItemViewType(i))
+                    adapter.onBindViewHolder(holder, i)
+                    holder.itemView.measure(
+                        View.MeasureSpec.makeMeasureSpec(view.width, View.MeasureSpec.EXACTLY),
+                        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+                    )
+                    holder.itemView.layout(
+                        0, 0, holder.itemView.measuredWidth,
+                        holder.itemView.measuredHeight
+                    )
+                    holder.itemView.isDrawingCacheEnabled = true
+                    holder.itemView.buildDrawingCache()
+                    val drawingCache = holder.itemView.drawingCache
+                    if (drawingCache != null) {
+                        bitmaCache.put(i.toString(), drawingCache)
+                    }
+                    height += holder.itemView.measuredHeight
+                }
+                bigBitmap = Bitmap.createBitmap(view.measuredWidth, height, Bitmap.Config.ARGB_8888)
+                val bigCanvas = Canvas(bigBitmap)
+                val lBackground = view.background
+                if (lBackground is ColorDrawable) {
+                    val lColor = lBackground.color
+                    bigCanvas.drawColor(lColor)
+                }
+                for (i in 0 until size) {
+                    val bitmap: Bitmap = bitmaCache.get(i.toString())
+                    bigCanvas.drawBitmap(bitmap, 0f, iHeight.toFloat(), paint)
+                    iHeight += bitmap.height
+                    bitmap.recycle()
+                }
+            }
+            return bigBitmap
+        }
+
+        fun saveImageToGallery(context: Context?, imageBytes: ByteArray?) {
+            val albumPath =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absolutePath
+            val imageName = "${toMD5(imageBytes.toString())}.jpg"
+            val imageFile = File(albumPath, imageName)
+            try {
+                val outputStream = FileOutputStream(imageFile)
+                // 将图片内容写入文件
+                outputStream.write(imageBytes)
+                outputStream.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            MediaScannerConnection.scanFile(context, arrayOf(imageFile.absolutePath), null, null)
+        }
+
+        fun ShowHint(index : Int, views : List<View>? = null) {
+            when (index) {
+                0 -> {
+                    GuideDialog.build()
+                        .setTipImage(R.drawable.guide_1)
+                        .setDialogLifecycleCallback(object : DialogLifecycleCallback<CustomDialog>() {
+                            override fun onDismiss(dialog: CustomDialog?) {
+                                super.onDismiss(dialog)
+                                ShowHint(1)
+                            }
+                        })
+                        .show()
+                }
+                1 -> {
+                    GuideDialog.build()
+                        .setTipImage(R.drawable.guide_2)
+                        .setDialogLifecycleCallback(object : DialogLifecycleCallback<CustomDialog>() {
+                            override fun onDismiss(dialog: CustomDialog?) {
+                                super.onDismiss(dialog)
+                                ShowHint(2)
+                            }
+                        })
+                        .show()
+                }
+                2 -> {
+                    GuideDialog.build()
+                        .setTipImage(R.drawable.guide_3)
+                        .setDialogLifecycleCallback(object : DialogLifecycleCallback<CustomDialog>() {
+                            override fun onDismiss(dialog: CustomDialog?) {
+                                super.onDismiss(dialog)
+                                ShowHint(3)
+                            }
+                        })
+                        .show()
+                }
+                3 -> {
+                    GuideDialog.build()
+                        .setTipImage(R.drawable.guide_4)
+                        .setDialogLifecycleCallback(object : DialogLifecycleCallback<CustomDialog>() {
+                            override fun onDismiss(dialog: CustomDialog?) {
+                                super.onDismiss(dialog)
+                            }
+                        })
+                        .show()
+                }
+                4 -> {
+                    GuideDialog.build()
+                        .setTipImage(R.drawable.guide_5)
+                        .setDialogLifecycleCallback(object : DialogLifecycleCallback<CustomDialog>() {
+                            override fun onDismiss(dialog: CustomDialog?) {
+                                super.onDismiss(dialog)
+                                ShowHint(5, views!!)
+                            }
+                        })
+                        .show()
+                }
+                5 -> {
+                    GuideDialog.show(views!![0], R.drawable.guide_6)
+                        .setStageLightType(GuideDialog.STAGE_LIGHT_TYPE.CIRCLE_OUTSIDE)
+                        .setDialogLifecycleCallback(object : DialogLifecycleCallback<CustomDialog>() {
+                            override fun onDismiss(dialog: CustomDialog?) {
+                                super.onDismiss(dialog)
+                            }
+                        })
+                }
+            }
+        }
     }
 }
 
 data class SettingData(
-    val DefaultSplitChar : String,
-    val ConversationBgColor : String,
-    val AutoCollaspe : Boolean,
-    val AutoCollaspeCount : Int
+    var DefaultSplitChar : String,
+    var ConversationBgColor : String,
+    var AutoCollaspe : Boolean,
+    var AutoCollaspeCount : Int,
+    var HintDisplyed : Boolean
 )
 
 data class PrefabData(
@@ -144,7 +314,16 @@ data class Image(
     val ImageName : String,
     val ImageOriginalUri : String,
     val isNotPrefab : Boolean
-)
+) {
+    fun toBitmap() : Bitmap {
+        return if (!isNotPrefab) {
+            val input = mainContext.assets.open("$ImageName.jpg")
+            BitmapFactory.decodeStream(input)
+        } else {
+            BitmapFactory.decodeFile(ImageOriginalUri)
+        }
+    }
+}
 
 data class Birthday(
     val Month : Int,

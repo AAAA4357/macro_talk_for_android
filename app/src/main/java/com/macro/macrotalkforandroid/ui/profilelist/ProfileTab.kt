@@ -102,10 +102,24 @@ class ProfileTab(val isPrefab : Boolean) : Fragment() {
             addProfile.setOnClickListener(addProfileClick)
         }
 
-        // 设置学生资料列表适配器和布局管理器
-        list.apply {
-            this.adapter = profileAdapter
-            this.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+        val layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+        val itemDecoration = SuspendItemDecoration(requireContext()).apply {
+            dividerDrawable = resources.getDrawable(R.drawable.ic_list_divider)
+            groupDividerDrawable = resources.getDrawable(R.drawable.ic_list_divider_wider)
+            profiles = profileList
+        }
+        if (list.itemDecorationCount == 0 && isPrefab) {
+            list.apply {
+                this.adapter = profileAdapter
+                this.layoutManager = layoutManager
+                addItemDecoration(itemDecoration)
+            }
+        } else if (list.itemDecorationCount == 0 && !isPrefab) {
+            profileAdapter.setOnItemLongClickListener(OnProfileItemLongClick())
+            list.apply {
+                this.adapter = profileAdapter
+                this.layoutManager = layoutManager
+            }
         }
     }
 

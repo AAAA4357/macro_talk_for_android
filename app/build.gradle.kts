@@ -9,15 +9,17 @@ android {
 
     defaultConfig {
         applicationId = "com.macro.macrotalkforandroid"
-        minSdk = 30
+        minSdk = 20
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 10
+        versionName = "1.6"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         renderscriptTargetApi = 21
         renderscriptSupportModeEnabled = true
+
+        multiDexEnabled = true
     }
 
     buildTypes {
@@ -42,6 +44,9 @@ android {
 }
 
 dependencies {
+    implementation("com.android.support:multidex:1.0.3")
+    implementation("androidx.multidex:multidex:2.0.1")
+
     implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
@@ -62,4 +67,6 @@ dependencies {
     implementation("io.github.meetsl:SCardView:1.0")
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("com.github.xuexiangjys:XUI:1.2.1")
+    implementation("cn.Leaqi:SwipeDrawer:1.6")
+    implementation("com.github.ZuoHailong:AppUpdate:0.2.6")
 }

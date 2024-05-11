@@ -22,7 +22,7 @@
         android:theme="@style/Theme.MacroTalkForAndroid"
         tools:targetApi="31">
         <activity
-            android:name="com.macro.macrotalkforandroid.ui.conversationlist.conversation.ConversationActivity"
+            android:name=".ui.conversationlist.conversation.ConversationActivity"
             android:exported="true" />
         <activity
             android:name="com.macro.macrotalkforandroid.ui.profilelist.profile.ProfileActivity"

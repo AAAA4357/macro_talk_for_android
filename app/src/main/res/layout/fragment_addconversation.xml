@@ -51,20 +51,20 @@
         app:tint="@color/lightgray"
         android:layout_marginLeft="25dp" />
 
-    <TextView
+    <com.xuexiang.xui.widget.button.roundbutton.RoundButton
         android:id="@+id/add_conversation_cover_reset"
         android:layout_width="60dp"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_marginStart="10dp"
         android:layout_gravity="center"
         android:gravity="center"
         android:clickable="true"
         android:text="@string/add_conversation_profile_reset"
         android:textAppearance="@style/default_text"
-        android:textColor="@color/momotalk_darkcyan"
+        android:textColor="@color/white"
         android:textSize="20sp"
-        android:background="?android:attr/selectableItemBackground"
-        android:layout_marginLeft="10dp" />
+        app:rb_backgroundColor="@color/momotalk_darkcyan"
+        android:foreground="?android:attr/selectableItemBackground" />
 
     </LinearLayout>
 
@@ -87,6 +87,7 @@
             android:id="@+id/add_conversation_search_content"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:ems="10"
             android:hint="@string/add_conversation_profile_hint"
             android:inputType="text"
@@ -97,20 +98,20 @@
             android:maxLength="20"
             android:theme="@style/input_underline"/>
 
-        <TextView
+        <com.xuexiang.xui.widget.button.roundbutton.RoundButton
             android:id="@+id/add_conversation_search_reset"
             android:layout_width="60dp"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:layout_marginStart="10dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:clickable="true"
             android:text="@string/add_conversation_profile_reset"
             android:textAppearance="@style/default_text"
-            android:textColor="@color/momotalk_darkcyan"
+            android:textColor="@color/white"
             android:textSize="20sp"
-            android:background="?android:attr/selectableItemBackground"
-            android:layout_marginLeft="10dp" />
+            android:foreground="?android:attr/selectableItemBackground"
+            app:rb_backgroundColor="@color/momotalk_darkcyan"/>
 
     </LinearLayout>
 
@@ -138,38 +139,39 @@
         android:layout_height="60dp"
         android:layout_marginTop="10dp">
 
-        <TextView
+        <com.xuexiang.xui.widget.button.roundbutton.RoundButton
             android:id="@+id/add_conversation_cancel"
-            android:layout_width="60dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="30dp"
+            android:layout_width="70dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="20dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:clickable="true"
             android:text="@string/add_cancel"
+            app:rb_radius="10dp"
             android:textAppearance="@style/default_text"
-            android:textColor="@color/momotalk_darkcyan"
+            android:textColor="@color/white"
             android:textSize="20sp"
-            android:background="?android:attr/selectableItemBackground"
-            android:layout_marginLeft="30dp" />
+            app:rb_backgroundColor="@color/momotalk_darkcyan"
+            android:foreground="?android:attr/selectableItemBackground" />
 
-        <TextView
+        <com.xuexiang.xui.widget.button.roundbutton.RoundButton
             android:id="@+id/add_conversation_confirm"
-            android:layout_width="60dp"
-            android:layout_height="40dp"
+            android:layout_width="70dp"
+            android:layout_height="45dp"
             android:layout_marginStart="120dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:clickable="true"
             android:text="@string/add_confirm"
             android:textAppearance="@style/default_text"
-            android:textColor="@color/momotalk_darkcyan"
+            android:textColor="@color/white"
             android:textSize="20sp"
+            app:rb_radius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_profile_description"
-            android:background="?android:attr/selectableItemBackground"
-            android:layout_marginLeft="120dp" />
+            app:rb_backgroundColor="@color/momotalk_pink1"
+            android:foreground="?android:attr/selectableItemBackground"/>
 
     </LinearLayout>
 

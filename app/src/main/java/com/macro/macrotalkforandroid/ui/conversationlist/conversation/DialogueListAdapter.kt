@@ -247,7 +247,7 @@ class DialogueListAdapter(private val context : Context, val dialogues : Mutable
         this.onItemClickListener = onItemClickListener
     }
     // 设置对话项长按监听器
-    fun setOnItemLongClickListener(onItemLongClickListener: OnItemLongClickListener) {
+    fun setOnItemLongClickListener(onItemLongClickListener: OnItemLongClickListener?) {
         this.onItemLongClickListener = onItemLongClickListener
     }
 }

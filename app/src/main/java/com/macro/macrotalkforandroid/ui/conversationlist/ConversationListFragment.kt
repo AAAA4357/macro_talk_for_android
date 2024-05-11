@@ -113,8 +113,8 @@ class ConversationListFragment : Fragment() {
     }
 
     inner class OnConversationItemClick : ConversationListAdapter.OnItemClickListener {
-        override fun OnItemClick(view: View?, data: Conversation?) {
-            ConversationActivity.conversation = data!!
+        override fun OnItemClick(view: View?, index: Int) {
+            ConversationActivity.conversation = Utils.storageData.Conversations[index]
             val intent = Intent(requireContext(), ConversationActivity()::class.java)
             startActivity(intent)
         }
@@ -123,7 +123,7 @@ class ConversationListFragment : Fragment() {
     inner class OnConversationItemLongClick() : ConversationListAdapter.OnItemLongClickListener {
         var modifyConversationView = AddConversationBindView(resources, requireContext(), this@ConversationListFragment, true)
 
-        override fun OnItemLongClick(v: View?, data: Conversation?) {
+        override fun OnItemLongClick(v: View?, index1: Int) {
             PopMenu.show(v, listOf("删除", "修改"))
                 .setOverlayBaseView(false)
                 .setAlignGravity(Gravity.BOTTOM)
@@ -132,15 +132,16 @@ class ConversationListFragment : Fragment() {
                     dialog.dismiss()
                     when (index) {
                         0 -> {
-                            removeConversation(Utils.storageData.Conversations.indexOf(data!!))
+                            removeConversation(index1)
+                            Utils.save()
                         }
                         1 -> {
-                            modifyConversationView.index = Utils.storageData.Conversations.indexOf(data!!)
+                            modifyConversationView.index = index1
                             val dialog = CustomDialog.build()
                             dialog.setCustomView(modifyConversationView)
                             dialog.setMaskColor(resources.getColor(R.color.trans_lightgray))
                             dialog.show()
-                            modifyConversationView.loadConversation(data)
+                            modifyConversationView.loadConversation(Utils.storageData.Conversations[index1])
                         }
                         else -> {}
                     }

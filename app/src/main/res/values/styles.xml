@@ -11,4 +11,8 @@
         <item name="colorAccent">@color/momotalk_pink1</item>
         <item name="colorControlNormal">@color/lightgray</item>
     </style>
+    <style name="autologin_switch">
+        <item name="colorAccent">@color/momotalk_pink1</item>
+        <item name="colorControlNormal">@color/lightgray</item>
+    </style>
 </resources>

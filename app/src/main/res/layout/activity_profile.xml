@@ -35,12 +35,12 @@
             android:layout_gravity="center"/>
     
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="23dp"
-            android:layout_marginEnd="23dp"
-            android:layout_marginBottom="23dp">
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginEnd="23dp">
         
         <ImageView
                 android:layout_width="match_parent"
@@ -210,8 +210,7 @@
                     android:orientation="vertical">
                 <ScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2">
+                        android:layout_height="match_parent">
                     
                     <TextView
                             android:id="@+id/profile_description"
@@ -223,23 +222,28 @@
                             android:textAlignment="center"
                             android:textAppearance="@style/default_text"
                             android:gravity="center_horizontal" />
-                
+
                 </ScrollView>
-                <Button
-                        android:layout_weight="0"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:layout_gravity="center"
-                        android:textAppearance="@style/default_text"
-                        android:text="@string/start_conversation"
-                        android:textSize="24sp"
-                />
+
             </LinearLayout>
-            
-            
+
         </LinearLayout>
     
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+        android:id="@+id/startConversationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textAppearance="@style/default_text"
+        android:text="@string/start_conversation"
+        android:textSize="24sp"
+        app:rb_radius="10dp"
+        android:textColor="@color/white"
+        app:rb_backgroundColor="@color/momotalk_pink1"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:layout_marginVertical="15dp"
+        android:padding="5dp" />
 
 </LinearLayout>

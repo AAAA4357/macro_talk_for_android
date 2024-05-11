@@ -82,13 +82,13 @@ class ConversationListAdapter(private val context: Context) :
             // 设置点击和长按监听器
             itemView.setOnClickListener { v ->
                 if (onItemClickListener != null) {
-                    onItemClickListener!!.OnItemClick(v, conversationList[layoutPosition])
+                    onItemClickListener!!.OnItemClick(v, layoutPosition)
                 }
             }
 
             itemView.setOnLongClickListener { v ->
                 if (onItemLongClickListener != null) {
-                    onItemLongClickListener!!.OnItemLongClick(v, conversationList[layoutPosition])
+                    onItemLongClickListener!!.OnItemLongClick(v, layoutPosition)
                 }
                 true
             }
@@ -99,12 +99,12 @@ class ConversationListAdapter(private val context: Context) :
 
     // 点击监听器接口
     interface OnItemClickListener {
-        fun OnItemClick(view: View?, data: Conversation?)
+        fun OnItemClick(view: View?, index: Int)
     }
 
     // 长按监听器接口
     interface OnItemLongClickListener {
-        fun OnItemLongClick(view: View?, data: Conversation?)
+        fun OnItemLongClick(view: View?, index: Int)
     }
 
     // 设置点击监听器

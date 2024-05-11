@@ -4,14 +4,15 @@
     android:height="128dp"
     android:viewportWidth="128"
     android:viewportHeight="128">
+    <path android:pathData="M 64 0 a 64 64 0 0 0 0 128 a 64 64 0 0 0 0 -128 m 0 10 a 54 54 0 0 1 0 108 a 54 54 0 0 1 0 -108" android:fillColor="@color/momotalk_pink1"/>
     <group android:name="bar1"
         android:pivotX="64"
         android:pivotY="64">
-        <path android:pathData="M 0 64 a 10 10 0 0 0 10 10 h 108 a 10 10 0 0 0 0 -20 h -108 a 10 10 0 0 0 -10 10" android:fillColor="@color/lightgray"/>
+        <path android:pathData="M 32 64 a 8 8 0 0 0 8 8 h 48 a 8 8 0 0 0 0 -16 h -48 a 8 8 0 0 0 -8 8" android:fillColor="@color/momotalk_pink1"/>
     </group>
     <group android:name="bar2"
         android:pivotX="64"
         android:pivotY="64">
-        <path android:pathData="M 0 64 a 10 10 0 0 0 10 10 h 108 a 10 10 0 0 0 0 -20 h -108 a 10 10 0 0 0 -10 10" android:fillColor="@color/lightgray"/>
+        <path android:pathData="M 32 64 a 8 8 0 0 0 8 8 h 48 a 8 8 0 0 0 0 -16 h -48 a 8 8 0 0 0 -8 8" android:fillColor="@color/momotalk_pink1"/>
     </group>
 </vector>

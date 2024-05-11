@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingTop="10dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/export_preview"
+        android:textAppearance="@style/default_text_title"
+        android:textSize="20sp"
+        android:layout_marginStart="20dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/preview_list"
+        android:layout_width="400dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:scaleX="0.8"
+        android:scaleY="0.8"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp">
+
+        <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+            android:id="@+id/cancel"
+            android:layout_width="70dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="20dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:clickable="true"
+            android:text="@string/add_cancel"
+            app:rb_radius="10dp"
+            android:textAppearance="@style/default_text"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:rb_backgroundColor="@color/momotalk_darkcyan"
+            android:foreground="?android:attr/selectableItemBackground" />
+
+        <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+            android:id="@+id/confirm"
+            android:layout_width="70dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="170dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/add_confirm"
+            android:textAppearance="@style/default_text"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:rb_radius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_profile_description"
+            app:rb_backgroundColor="@color/momotalk_pink1"
+            android:foreground="?android:attr/selectableItemBackground"/>
+
+    </LinearLayout>
+
+</LinearLayout>

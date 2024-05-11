@@ -2,8 +2,8 @@
     <string name="app_name">Macro Talk for Android</string>
     <string name="title_profile_list">档案列表</string>
     <string name="title_conversation_list">对话列表</string>
-    <string name="title_settings">设置页面</string>
     <string name="title_online">在线平台</string>
+    <string name="title_settings">软件设置</string>
     <string name="prefab_profile_tab">预制档案</string>
     <string name="custom_profile_tab">自定义档案</string>
     <string name="custom_profile_empty">暂无档案\n可点击右下角按钮创建</string>
@@ -55,4 +55,17 @@
     <string name="export_marginBottom">页边距（底）</string>
     <string name="export_not_cut">不切割</string>
     <string name="export_cut">切割</string>
+    <string name="export_margin">页边距（左、上、右、下）</string>
+    <string name="export_cutmode">图片切割模式</string>
+    <string name="export_cuthint">点击图片选择当前截止对话</string>
+    <string name="export_preview">导出预览（点击确定则导出至相册）</string>
+    <string name="setting_char">默认分割符号</string>
+    <string name="setting_bg">对话背景颜色</string>
+    <string name="setting_collapse">自动缩进对话</string>
+    <string name="setting_collapse_count">自动缩进对话长度</string>
+    <string name="hint_login_or_register">登录/注册</string>
+    <string name="hint_login_on_start">下次打开时自动登录</string>
+    <string name="hint_register_id">用户ID:</string>
+    <string name="hint_no_password">*密码自动生成</string>
+    <string name="hint_id_registered">ID已注册！</string>
 </resources>

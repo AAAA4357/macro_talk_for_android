@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="60dp"
+            android:textAppearance="@style/default_text_dark"
+            android:text="@string/hint_register_id"/>
+
+        <EditText
+            android:id="@+id/register_id"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:theme="@style/input_underline"/>
+
+        <TextView
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="end"
+            android:textAppearance="@style/default_text_light"
+            android:textSize="16sp"
+            android:textColor="@color/gray"
+            android:text="@string/hint_no_password"/>
+
+        <TextView
+            android:id="@+id/registered"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="end"
+            android:textAppearance="@style/default_text_light"
+            android:textSize="12sp"
+            android:textColor="#FF0000"
+            android:text="@string/hint_id_registered"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp">
+
+        <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+            android:id="@+id/register_user_cancel"
+            android:layout_width="70dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="80dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:clickable="true"
+            android:text="@string/add_cancel"
+            app:rb_radius="10dp"
+            android:textAppearance="@style/default_text"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:rb_backgroundColor="@color/momotalk_darkcyan"
+            android:foreground="?android:attr/selectableItemBackground" />
+
+        <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+            android:id="@+id/register_user_confirm"
+            android:layout_width="70dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="120dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/add_confirm"
+            android:textAppearance="@style/default_text"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:rb_radius="10dp"
+            app:rb_backgroundColor="@color/momotalk_pink1"
+            android:foreground="?android:attr/selectableItemBackground"/>
+
+    </LinearLayout>
+
+</LinearLayout>

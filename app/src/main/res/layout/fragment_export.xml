@@ -2,11 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="300dp"
+    android:layout_width="350dp"
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical"
     android:paddingTop="10dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/default_text_title"
+        android:textSize="20sp"
+        android:text="@string/export_margin"
+        android:layout_marginStart="30dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,8 +22,24 @@
         android:gravity="center">
 
         <EditText
+            android:id="@+id/export_marginLeft"
+            android:layout_width="70dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:hint="@string/export_marginLeft"
+            android:inputType="number"
+            android:lines="1"
+            android:selectAllOnFocus="true"
+            android:textAppearance="@style/default_text_dark"
+            android:textSize="16sp"
+            android:maxLength="20"
+            android:theme="@style/input_underline"
+            android:text="20" />
+
+        <EditText
             android:id="@+id/export_marginTop"
-            android:layout_width="120dp"
+            android:layout_width="70dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:ems="10"
@@ -30,31 +54,8 @@
             android:text="20"/>
 
         <EditText
-            android:id="@+id/export_marginLeft"
-            android:layout_width="120dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:ems="10"
-            android:hint="@string/export_marginLeft"
-            android:inputType="number"
-            android:lines="1"
-            android:selectAllOnFocus="true"
-            android:textAppearance="@style/default_text_dark"
-            android:textSize="16sp"
-            android:maxLength="20"
-            android:theme="@style/input_underline"
-            android:text="20" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
-
-        <EditText
             android:id="@+id/export_marginRight"
-            android:layout_width="120dp"
+            android:layout_width="70dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:ems="10"
@@ -70,7 +71,7 @@
 
         <EditText
             android:id="@+id/export_marginBottom"
-            android:layout_width="120dp"
+            android:layout_width="70dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:ems="10"
@@ -86,6 +87,14 @@
 
     </LinearLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/default_text_title"
+        android:textSize="20sp"
+        android:text="@string/export_cutmode"
+        android:layout_marginStart="30dp"/>
+
     <RadioGroup
         android:id="@+id/cutmode"
         android:layout_width="match_parent"
@@ -95,83 +104,77 @@
 
         <RadioButton
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:text="@string/export_not_cut"
             android:textAppearance="@style/default_text_dark"
             android:textSize="16sp"/>
 
         <RadioButton
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:text="@string/export_cut"
             android:textAppearance="@style/default_text_dark"
             android:textSize="16sp"/>
 
     </RadioGroup>
 
-    <LinearLayout
-        android:id="@+id/cut_layout"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/cut_hint"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_gravity="center"
+        android:textAppearance="@style/default_text"
+        android:text="@string/export_cuthint"
+        android:translationY="10dp"
+        android:visibility="invisible"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="60dp"
-            android:layout_height="230dp"
-            android:layout_marginStart="20dp"
-            android:layout_weight="1"
-            android:layout_marginLeft="20dp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/dialogue_preview"
-            android:layout_width="60dp"
-            android:layout_height="230dp"
-            android:layout_marginEnd="20dp"
-            android:layout_weight="1"
-            android:layout_marginRight="20dp" />
-
-    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/dialogue_preview"
+        android:layout_width="400dp"
+        android:layout_height="200dp"
+        android:scaleX="0.7"
+        android:scaleY="0.7"
+        android:layout_gravity="center"
+        android:visibility="invisible"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="10dp">
 
-        <TextView
+        <com.xuexiang.xui.widget.button.roundbutton.RoundButton
             android:id="@+id/cancel"
-            android:layout_width="60dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="30dp"
+            android:layout_width="70dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="20dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:clickable="true"
             android:text="@string/add_cancel"
+            app:rb_radius="10dp"
             android:textAppearance="@style/default_text"
-            android:textColor="@color/momotalk_darkcyan"
+            android:textColor="@color/white"
             android:textSize="20sp"
-            android:background="?android:attr/selectableItemBackground"
-            android:layout_marginLeft="30dp" />
+            app:rb_backgroundColor="@color/momotalk_darkcyan"
+            android:foreground="?android:attr/selectableItemBackground" />
 
-        <TextView
+        <com.xuexiang.xui.widget.button.roundbutton.RoundButton
             android:id="@+id/confirm"
-            android:enabled="false"
-            android:layout_width="60dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="120dp"
+            android:layout_width="70dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="170dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:clickable="true"
             android:text="@string/add_confirm"
             android:textAppearance="@style/default_text"
-            android:textColor="@color/momotalk_darkcyan"
+            android:textColor="@color/white"
             android:textSize="20sp"
+            app:rb_radius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_profile_description"
-            android:background="?android:attr/selectableItemBackground"
-            android:layout_marginLeft="120dp" />
+            app:rb_backgroundColor="@color/momotalk_pink1"
+            android:foreground="?android:attr/selectableItemBackground"/>
 
     </LinearLayout>
 

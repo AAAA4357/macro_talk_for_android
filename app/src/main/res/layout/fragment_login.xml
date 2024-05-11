@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:orientation="vertical">
+
+        <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+            android:id="@+id/login_or_register"
+            android:layout_width="140dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:gravity="center"
+            android:text="@string/hint_login_or_register"
+            android:textAppearance="@style/default_text"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:rb_radius="10dp"
+            app:rb_backgroundColor="@color/momotalk_pink1"
+            android:foreground="?android:attr/selectableItemBackground"/>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/auto_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAppearance="@style/default_text"
+            android:text="@string/hint_login_on_start"
+            android:theme="@style/autologin_switch"/>
+
+    </LinearLayout>
+
+</LinearLayout>

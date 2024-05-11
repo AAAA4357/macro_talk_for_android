@@ -1,28 +1,40 @@
 package com.macro.macrotalkforandroid.ui.conversationlist.conversation
 
+import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.AnimatedVectorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
+import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.Animation.AnimationListener
+import android.view.animation.TranslateAnimation
+import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ExpandableListView
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.SimpleAdapter
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.hjq.permissions.OnPermissionCallback
@@ -34,7 +46,10 @@ import com.kongzue.dialogx.dialogs.CustomDialog
 import com.kongzue.dialogx.dialogs.PopMenu
 import com.kongzue.dialogx.dialogs.PopTip
 import com.kongzue.dialogx.interfaces.DialogLifecycleCallback
+import com.kongzue.dialogx.interfaces.OnBindView
 import com.kongzue.dialogx.interfaces.OnBottomMenuButtonClickListener
+import com.kongzue.dialogx.interfaces.OnIconChangeCallBack
+import com.kongzue.dialogx.interfaces.OnMenuItemClickListener
 import com.kongzue.dialogx.util.TextInfo
 import com.macro.macrotalkforandroid.Conversation
 import com.macro.macrotalkforandroid.Dialogue
@@ -42,10 +57,13 @@ import com.macro.macrotalkforandroid.DialogueType
 import com.macro.macrotalkforandroid.Image
 import com.macro.macrotalkforandroid.R
 import com.macro.macrotalkforandroid.Utils
+import com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
+import com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinnerAdapter
+import com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinnerBaseAdapter
 import java.io.File
+import java.lang.IndexOutOfBoundsException
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
-
 
 class ConversationActivity : AppCompatActivity() {
     companion object {
@@ -56,8 +74,6 @@ class ConversationActivity : AppCompatActivity() {
     var extraExpanded: Boolean = false
     // 额外展开标志
 
-    lateinit var avatorAdapter: ConversationAvatorAdapter
-    // 头像适配器
     lateinit var dialogueAdapter: DialogueListAdapter
     // 对话列表适配器
     lateinit var conversationOverwriteBindView: ConversationOverwriteBindView
@@ -73,53 +89,69 @@ class ConversationActivity : AppCompatActivity() {
     var multiSelect: Boolean = false
     // 多选模式标志
 
+    lateinit var personalButton : ImageButton
+
+    lateinit var profileButton : ImageButton
+
+    lateinit var avatorButton : ImageButton
+
+    var personal = 0
+
+    var profile : Int = 0
+        set(value) {
+            field = value
+            avatorList = conversation.Profiles[value].toProfile().Images.map {
+                it.toBitmap()
+            }
+            if (avatorList.count() == 1) {
+                avatorButton.visibility = View.GONE
+            } else {
+                avatorButton.visibility = View.VISIBLE
+            }
+        }
+
+    var avator = 0
+
+    lateinit var profileList : List<String>
+
+    lateinit var profileBitmapList : List<Bitmap>
+
+    lateinit var avatorList : List<Bitmap>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_conversation)
+
+        personalButton = findViewById(R.id.dialogue_Personal)
+
+        profileButton = findViewById(R.id.conversation_profile)
+
+        avatorButton = findViewById(R.id.conversation_avator)
+
+        personalButton.setOnClickListener(OnPersonalClick())
+
+        if (conversation.Profiles.count() == 1) {
+            profileButton.visibility = View.GONE
+        } else {
+            profileList = conversation.Profiles.map {
+                it.toProfile().Name
+            }
+            profileBitmapList = conversation.Profiles.map {
+                it.toProfile().Images[0].toBitmap()
+            }
+            profileButton.setOnClickListener(OnProfileClick())
+            profileButton.setImageBitmap(profileBitmapList[0])
+        }
+
+        avatorList = conversation.Profiles[0].toProfile().Images.map{ it.toBitmap() }
+        avatorAdapter = AvatorAdapter(avatorList)
+        avatorButton.setImageBitmap(avatorList[0])
+        avatorButton.setOnClickListener(OnAvatorClick())
 
         title = "对话 - " + conversation.Title
 
         val list = findViewById<RecyclerView>(R.id.Conversation_DialogueList)
         list.setBackgroundColor(Color.parseColor(Utils.SettingData.ConversationBgColor))
-
-        val personal = findViewById<ViewPager2>(R.id.conversation_personal)
-        val personalAdapter = ConversationPersonalAdapter()
-        personalAdapter.context = this@ConversationActivity
-        personalAdapter.setOnItemClickListener(OnPersonalViewClick())
-        personal.apply {
-            this.orientation = ViewPager2.ORIENTATION_VERTICAL
-            this.adapter = personalAdapter
-        }
-
-        val profile = findViewById<ViewPager2>(R.id.conversation_profile)
-        if (conversation.Profiles.size == 1) {
-            profile.visibility = View.GONE
-        } else {
-            profile.registerOnPageChangeCallback(OnProfileViewChangeCallback())
-            val profileAdapter = ConversationProfileAdapter(conversation.Profiles.map { it.toProfile().Images[0] })
-            profileAdapter.context = this@ConversationActivity
-            profileAdapter.setOnItemClickListener(OnProfileViewClick(conversation.Profiles.size - 1))
-            profile.apply {
-                this.orientation = ViewPager2.ORIENTATION_VERTICAL
-                this.adapter = profileAdapter
-            }
-        }
-
-        val avator = findViewById<ViewPager2>(R.id.conversation_avator)
-        if (conversation.Profiles.size == 1 && conversation.Profiles[0].toProfile().Images.size == 1) {
-            avator.visibility = View.GONE
-        } else {
-            if (conversation.Profiles[0].toProfile().Images.size == 1) {
-                avator.visibility = View.INVISIBLE
-            }
-        }
-        avatorAdapter = ConversationAvatorAdapter(conversation.Profiles[0].toProfile().Images)
-        avatorAdapter.context = this@ConversationActivity
-        avatorAdapter.setOnItemClickListener(OnAvatorViewClick(conversation.Profiles[0].toProfile().Images.size - 1))
-        avator.apply {
-            this.orientation = ViewPager2.ORIENTATION_VERTICAL
-            this.adapter = avatorAdapter
-        }
 
         val imageButton = findViewById<ImageButton>(R.id.conversation_cover)
         imageButton.setOnClickListener(OnExpandClick())
@@ -162,6 +194,10 @@ class ConversationActivity : AppCompatActivity() {
 
         val export = findViewById<ImageButton>(R.id.conversation_export)
         export.setOnClickListener(OnExportClick())
+
+        if (!Utils.SettingData.HintDisplyed) {
+            Utils.ShowHint(4, listOf(personalButton, profileButton, avatorButton))
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -171,12 +207,8 @@ class ConversationActivity : AppCompatActivity() {
 
             val image = Image(Utils.toMD5(file.name), file.absolutePath, true)
 
-            val personal = findViewById<ViewPager2>(R.id.conversation_personal)
-            val profile = findViewById<ViewPager2>(R.id.conversation_profile)
-            val avator = findViewById<ViewPager2>(R.id.conversation_avator)
-
             if (conversation.Dialogues.size > 0) {
-                if (conversation.Dialogues[conversation.Dialogues.size - 1].Avator != conversation.Profiles[profile.currentItem].toProfile().Images[avator.currentItem]) imagecounter = 0
+                if (conversation.Dialogues[conversation.Dialogues.size - 1].Avator != conversation.Profiles[profile].toProfile().Images[avator]) imagecounter = 0
             }
 
             val overwriteImage = if (avatorOverwrite == null) {
@@ -193,12 +225,12 @@ class ConversationActivity : AppCompatActivity() {
             }
 
             addDialogue(
-                when (personal.currentItem) {
+                when (personal) {
                     0 -> if (counter.toFloat() % Utils.SettingData.AutoCollaspeCount.toFloat() == 0f || !Utils.SettingData.AutoCollaspe)
                              Dialogue(
                                  DialogueType.ImageStudent1,
-                                 conversation.Profiles[profile.currentItem].toProfile().Name,
-                                 conversation.Profiles[profile.currentItem].toProfile().Images[avator.currentItem],
+                                 conversation.Profiles[profile].toProfile().Name,
+                                 conversation.Profiles[profile].toProfile().Images[avator],
                                  null,
                                  image,
                                  overwriteImage,
@@ -208,7 +240,7 @@ class ConversationActivity : AppCompatActivity() {
                              Dialogue(
                                  DialogueType.ImageStudent2,
                                  null,
-                                 conversation.Profiles[profile.currentItem].toProfile().Images[avator.currentItem],
+                                 conversation.Profiles[profile].toProfile().Images[avator],
                                  null,
                                  image,
                                  overwriteImage,
@@ -226,7 +258,7 @@ class ConversationActivity : AppCompatActivity() {
                     3 -> Dialogue(
                         DialogueType.ImageStudent2,
                         null,
-                        conversation.Profiles[profile.currentItem].toProfile().Images[avator.currentItem],
+                        conversation.Profiles[profile].toProfile().Images[avator],
                         null,
                         image,
                         overwriteImage,
@@ -236,7 +268,7 @@ class ConversationActivity : AppCompatActivity() {
                 }
             )
 
-            if (personal.currentItem == 0) imagecounter++
+            if (personal == 0) imagecounter++
             else imagecounter = 0
 
             counter = 0
@@ -256,6 +288,7 @@ class ConversationActivity : AppCompatActivity() {
         Utils.save()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (multiSelect) {
             multiSelect = false
@@ -268,7 +301,11 @@ class ConversationActivity : AppCompatActivity() {
 
     fun addDialogue(dialogue : Dialogue) {
         dialogueAdapter.addDialogue(dialogue)
-        conversation.Dialogues.add(dialogue)
+        if (dialogueAdapter.rewriteIndex != null) conversation.Dialogues[dialogueAdapter.rewriteIndex!!] = dialogue
+        else if (dialogueAdapter.insertIndex != null) conversation.Dialogues.add(dialogueAdapter.insertIndex!!, dialogue)
+        else conversation.Dialogues.add(dialogue)
+        dialogueAdapter.rewriteIndex = null
+        dialogueAdapter.insertIndex = null
     }
 
     fun removeDialogue(dialogue: Dialogue) {
@@ -289,35 +326,25 @@ class ConversationActivity : AppCompatActivity() {
                 return
             }
 
-            val personal = findViewById<ViewPager2>(R.id.conversation_personal)
-            val profile = findViewById<ViewPager2>(R.id.conversation_profile)
-            val avator = findViewById<ViewPager2>(R.id.conversation_avator)
-
-            val name = conversation.Profiles[profile.currentItem].toProfile().Name
+            val name = conversation.Profiles[profile].toProfile().Name
 
             if (conversation.Dialogues.size > 0) {
-                if (conversation.Dialogues[conversation.Dialogues.size - 1].Avator != conversation.Profiles[profile.currentItem].toProfile().Images[avator.currentItem]) counter = 0
+                if (conversation.Dialogues[conversation.Dialogues.size - 1].Avator != conversation.Profiles[profile].toProfile().Images[avator]) counter = 0
             }
 
             val overwriteImage = if (avatorOverwrite == null) {
                 null
             } else {
                 val file = File(avatorOverwrite!!)
-                val newfile = File(Utils.appDataPath + "/" + Utils.toMD5(file.name))
-                if (newfile.exists()) {
-                    Files.copy(file.toPath(), newfile.toPath(), StandardCopyOption.REPLACE_EXISTING)
-                } else {
-                    Files.copy(file.toPath(), newfile.toPath())
-                }
-                Image(Utils.toMD5(file.name), newfile.absolutePath, true)
+                Image(Utils.toMD5(file.name), file.absolutePath, true)
             }
 
-            addDialogue(when (personal.currentItem) {
+            addDialogue(when (personal) {
                 0 -> if (counter.toFloat() % Utils.SettingData.AutoCollaspeCount.toFloat() == 0f || !Utils.SettingData.AutoCollaspe || avatorOverwrite != null || nameOverwrite != null)
                     Dialogue(
                         DialogueType.Student1,
                         name,
-                        conversation.Profiles[profile.currentItem].toProfile().Images[avator.currentItem],
+                        conversation.Profiles[profile].toProfile().Images[avator],
                         listOf(sender.text.toString()),
                         null,
                         overwriteImage,
@@ -327,7 +354,7 @@ class ConversationActivity : AppCompatActivity() {
                     Dialogue(
                         DialogueType.Student2,
                         null,
-                        conversation.Profiles[profile.currentItem].toProfile().Images[avator.currentItem],
+                        conversation.Profiles[profile].toProfile().Images[avator],
                         listOf(sender.text.toString()),
                         null,
                         overwriteImage,
@@ -354,7 +381,7 @@ class ConversationActivity : AppCompatActivity() {
                 3 -> Dialogue(
                     DialogueType.Student2,
                     null,
-                    conversation.Profiles[profile.currentItem].toProfile().Images[avator.currentItem],
+                    conversation.Profiles[profile].toProfile().Images[avator],
                     listOf(sender.text.toString()),
                     null,
                     overwriteImage,
@@ -363,7 +390,7 @@ class ConversationActivity : AppCompatActivity() {
                 else -> Dialogue.Empty
             })
 
-            if (personal.currentItem == 0) counter++
+            if (personal == 0) counter++
             else counter = 0
 
             imagecounter = 0
@@ -377,11 +404,10 @@ class ConversationActivity : AppCompatActivity() {
 
     inner class OnKnotClick : OnClickListener {
         override fun onClick(v: View?) {
-            val profile = findViewById<ViewPager2>(R.id.conversation_profile)
             addDialogue(
                 Dialogue(
                     DialogueType.Knot,
-                    conversation.Profiles[profile.currentItem].toProfile().Name,
+                    conversation.Profiles[profile].toProfile().Name,
                     null,
                     null,
                     null,
@@ -427,6 +453,14 @@ class ConversationActivity : AppCompatActivity() {
 
     inner class OnImageClick : OnClickListener {
         override fun onClick(v: View?) {
+            if (personal == 2) {
+                PopTip.show("旁白不可发送图片")
+                    .setBackgroundColor(resources.getColor(R.color.warning))
+                    .setMessageTextInfo(TextInfo().apply {
+                        this.fontColor = resources.getColor(R.color.white)
+                    })
+                return
+            }
             XXPermissions.with(this@ConversationActivity)
             .permission(Permission.READ_MEDIA_IMAGES)
             .request(object : OnPermissionCallback {
@@ -458,6 +492,87 @@ class ConversationActivity : AppCompatActivity() {
         }
     }
 
+    inner class OnPersonalClick : OnClickListener {
+        override fun onClick(v: View?) {
+            PopMenu.show(personalButton, if (Utils.SettingData.AutoCollaspe) listOf("学生", "老师", "旁白") else listOf("学生1", "学生2", "老师", "旁白") )
+                .setWidth(Utils.dip2px(this@ConversationActivity, 80f))
+                .setOverlayBaseView(false)
+                .setAlignGravity(Gravity.TOP)
+                .setOnMenuItemClickListener { _, _, index ->
+                    personal = if (Utils.SettingData.AutoCollaspe) index else {
+                        when (index) {
+                            0 -> 0
+                            1 -> 3
+                            2 -> 1
+                            3 -> 2
+                            else -> throw IndexOutOfBoundsException()
+                        }
+                    }
+                    when (personal) {
+                        0 -> personalButton.setImageDrawable(resources.getDrawable(R.drawable.ic_student))
+                        1 -> personalButton.setImageDrawable(resources.getDrawable(R.drawable.ic_teacher))
+                        2 -> personalButton.setImageDrawable(resources.getDrawable(R.drawable.ic_narrator))
+                        3 -> personalButton.setImageDrawable(resources.getDrawable(R.drawable.ic_student))
+                    }
+                    false
+                }
+        }
+    }
+
+    inner class OnProfileClick : OnClickListener {
+        override fun onClick(v: View?) {
+            PopMenu.show(personalButton, profileList)
+                .setWidth(Utils.dip2px(this@ConversationActivity, 120f))
+                .setOverlayBaseView(false)
+                .setBaseView(v!!)
+                .setAlignGravity(Gravity.TOP)
+                .setOnMenuItemClickListener { _, _, index ->
+                    profile = index
+                    profileButton.setImageBitmap(profileBitmapList[index])
+                    avatorList = conversation.Profiles[index].toProfile().Images.map { it.toBitmap() }
+                    if (avatorList.size == 1) {
+                        avatorButton.visibility = View.GONE
+                    } else {
+                        avatorButton.visibility = View.VISIBLE
+                        avatorAdapter = AvatorAdapter(avatorList)
+                    }
+                    false
+                }
+        }
+    }
+
+    lateinit var avatorAdapter : AvatorAdapter
+
+    inner class OnAvatorClick : OnClickListener {
+        override fun onClick(v: View?) {
+            BottomMenu.show()
+                .setMessage("请选择一个头像，下滑关闭取消")
+                .setCustomView(OnAvatorListBindView())
+        }
+
+        inner class OnAvatorListBindView : OnBindView<BottomDialog>(R.layout.fragment_avator_list) {
+            override fun onBind(bottomDialog: BottomDialog?, v: View?) {
+                val list = v!!.findViewById<RecyclerView>(R.id.avator_list)
+                list.apply {
+                    this.adapter = avatorAdapter
+                    this.layoutManager = GridLayoutManager(this@ConversationActivity, 4)
+                }
+                dialog = bottomDialog
+            }
+        }
+    }
+
+    var dialog : BottomDialog? = null
+
+    inner class OnAvatorItemClick(val index : Int) : OnClickListener {
+        override fun onClick(v: View?) {
+            avator = index
+            dialog!!.dismiss()
+            avatorButton.setImageBitmap(avatorList[index])
+            dialog = null
+        }
+    }
+
     inner class OnOverwriteClick : OnClickListener {
         override fun onClick(v: View?) {
             BottomMenu.show()
@@ -477,59 +592,22 @@ class ConversationActivity : AppCompatActivity() {
 
     inner class OnExportClick : OnClickListener {
         override fun onClick(v: View?) {
-            return
             val exportBindView = ConversationExportBindView(this@ConversationActivity, resources, conversation.Dialogues, dialogueAdapter)
             val dialog = CustomDialog.build()
             dialog.setCustomView(exportBindView)
             dialog.setMaskColor(resources.getColor(R.color.trans_lightgray))
+            dialog.setDialogLifecycleCallback(object : DialogLifecycleCallback<CustomDialog>() {
+                override fun onDismiss(dialog: CustomDialog?) {
+                    for (dialogue in dialogueAdapter.dialogues.toMutableList()) {
+                        dialogueAdapter.removeDialogue(0)
+                    }
+                    for (dialogue in conversation.Dialogues) {
+                        dialogueAdapter.addDialogue(dialogue)
+                    }
+                    super.onDismiss(dialog)
+                }
+            })
             dialog.show()
-        }
-    }
-
-    inner class OnProfileViewChangeCallback : OnPageChangeCallback() {
-        override fun onPageSelected(position: Int) {
-            val avator = findViewById<ViewPager2>(R.id.conversation_avator)
-            if (conversation.Profiles[position].toProfile().Images.size == 1) {
-                if (avator.alpha == 1f) {
-                    val animation = AlphaAnimation(1f, 0f)
-                    animation.duration = 600
-                    animation.setAnimationListener(object : AnimationListener {
-                        override fun onAnimationStart(animation: Animation?) {
-                            avator.alpha = 0f
-                        }
-
-                        override fun onAnimationEnd(animation: Animation?) {
-                            avator.visibility = View.INVISIBLE
-                        }
-
-                        override fun onAnimationRepeat(animation: Animation?) {
-                        }
-
-                    })
-                    avator.startAnimation(animation)
-                }
-            } else {
-                if (avator.alpha == 0f) {
-                    val animation = AlphaAnimation(0f, 1f)
-                    animation.duration = 600
-                    animation.setAnimationListener(object : AnimationListener {
-                        override fun onAnimationStart(animation: Animation?) {
-                            avator.alpha = 1f
-                            avator.visibility = View.VISIBLE
-                        }
-
-                        override fun onAnimationEnd(animation: Animation?) {
-                        }
-
-                        override fun onAnimationRepeat(animation: Animation?) {
-                        }
-                    })
-                    avator.startAnimation(animation)
-                }
-            }
-            avatorAdapter.images = conversation.Profiles[position].toProfile().Images
-            avatorAdapter.notifyDataSetChanged()
-            avatorAdapter.setOnItemClickListener(OnAvatorViewClick(avatorAdapter.images.size))
         }
     }
 
@@ -570,86 +648,50 @@ class ConversationActivity : AppCompatActivity() {
         }
     }
 
-    interface OnItemClickListener {
-        fun OnItemClick(view : View?, data : Int)
-    }
-
-    inner class OnPersonalViewClick(): OnItemClickListener {
-        override fun OnItemClick(view: View?, data: Int) {
-            val personal = findViewById<ViewPager2>(R.id.conversation_personal)
-            if (data == 2) {
-                personal.setCurrentItem(0, true)
-            } else {
-                personal.setCurrentItem(data + 1, true)
-            }
-        }
-    }
-
-    inner class OnProfileViewClick(val size : Int): OnItemClickListener {
-        override fun OnItemClick(view: View?, data: Int) {
-            val profile = findViewById<ViewPager2>(R.id.conversation_profile)
-            if (data == size) {
-                profile.setCurrentItem(0, true)
-            } else {
-                profile.setCurrentItem(data + 1, true)
-            }
-        }
-    }
-
-    inner class OnAvatorViewClick(val size : Int): OnItemClickListener {
-        override fun OnItemClick(view: View?, data: Int) {
-            val avator = findViewById<ViewPager2>(R.id.conversation_avator)
-            if (data == size - 1) {
-                avator.setCurrentItem(0, true)
-            } else {
-                avator.setCurrentItem(data + 1, true)
-            }
-        }
-    }
-
     inner class OnExpandClick : OnClickListener {
         override fun onClick(v: View?) {
             extraExpanded = if (!extraExpanded) {
                 (v as ImageButton).setImageDrawable(resources.getDrawable(R.drawable.animated_ic_dialogue_extra) as AnimatedVectorDrawable)
                 val vectorDrawable = v.drawable as AnimatedVectorDrawable
                 vectorDrawable.start()
-                val layout = findViewById<LinearLayout>(R.id.conversation_extra_layout)
-                val animation = AlphaAnimation(0f, 1f)
-                animation.duration = 600
-                animation.setAnimationListener(object : AnimationListener{
-                    override fun onAnimationStart(animation: Animation?) {
-                        layout.visibility = View.VISIBLE
-                    }
-
-                    override fun onAnimationEnd(animation: Animation?) {
-                    }
-
-                    override fun onAnimationRepeat(animation: Animation?) {
-                    }
-                })
-                layout.startAnimation(animation)
+                val layout = findViewById<LinearLayout>(R.id.basic_panel)
+                val objectAnimation = ObjectAnimator.ofFloat(layout, "translationY", Utils.dip2px(this@ConversationActivity, 130f).toFloat(), Utils.dip2px(this@ConversationActivity, 0f).toFloat())
+                objectAnimation.duration = 600
+                objectAnimation.start()
                 true
             } else {
                 (v as ImageButton).setImageDrawable(resources.getDrawable(R.drawable.animated_ic_dialogue_extra_reverse) as AnimatedVectorDrawable)
                 val vectorDrawable = v.drawable as AnimatedVectorDrawable
                 vectorDrawable.start()
-                val layout = findViewById<LinearLayout>(R.id.conversation_extra_layout)
-                val animation = AlphaAnimation(1f, 0f)
-                animation.duration = 600
-                animation.setAnimationListener(object : AnimationListener{
-                    override fun onAnimationStart(animation: Animation?) {
-                    }
-
-                    override fun onAnimationEnd(animation: Animation?) {
-                        layout.visibility = View.GONE
-                    }
-
-                    override fun onAnimationRepeat(animation: Animation?) {
-                    }
-                })
-                layout.startAnimation(animation)
+                val layout = findViewById<LinearLayout>(R.id.basic_panel)
+                val objectAnimation = ObjectAnimator.ofFloat(layout, "translationY", Utils.dip2px(this@ConversationActivity, 0f).toFloat(), Utils.dip2px(this@ConversationActivity, 130f).toFloat())
+                objectAnimation.duration = 600
+                objectAnimation.start()
                 false
             }
+        }
+    }
+
+    inner class AvatorAdapter(val bitmaps : List<Bitmap>) : RecyclerView.Adapter<AvatorAdapter.AvatorViewHolder>() {
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AvatorViewHolder {
+            val viewHolder = AvatorViewHolder(LayoutInflater.from(this@ConversationActivity).inflate(R.layout.avator_item, parent, false))
+            viewHolder.avatorView = viewHolder.itemView.findViewById(R.id.avator)
+            return  viewHolder
+        }
+
+        override fun getItemCount(): Int {
+            return bitmaps.size
+        }
+
+        override fun onBindViewHolder(holder: AvatorViewHolder, position: Int) {
+            val avator = holder.avatorView
+            avator.setImageBitmap(bitmaps[position])
+            avator.setOnClickListener(OnAvatorItemClick(position))
+        }
+
+        inner class AvatorViewHolder(itemView: View) : ViewHolder(itemView) {
+            lateinit var avatorView : ImageButton
         }
     }
 }

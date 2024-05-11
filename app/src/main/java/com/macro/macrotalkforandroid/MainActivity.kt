@@ -1,15 +1,24 @@
 package com.macro.macrotalkforandroid
 
+import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.hailong.appupdate.AppUpdateManager
+import com.kongzue.dialogx.dialogs.CustomDialog
+import com.kongzue.dialogx.dialogs.GuideDialog
+import com.kongzue.dialogx.interfaces.DialogLifecycleCallback
 import com.macro.macrotalkforandroid.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        const val updateUrl = "http://macro.skyman.cloud:2100/api/Application/GetLatest/Android"
+    }
 
     private lateinit var binding: ActivityMainBinding
 
@@ -38,5 +47,9 @@ class MainActivity : AppCompatActivity() {
 
         // 将底部导航视图与导航控制器关联
         navView.setupWithNavController(navController)
+
+        if (!Utils.SettingData.HintDisplyed) {
+            Utils.ShowHint(0)
+        }
     }
 }
